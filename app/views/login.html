@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="default-layout simple-layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon" type="image/vnd.microsoft.icon"
+	href="http://ytk.fbcontent.cn/s/c34fd141-favicon.ico">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<script src="@{'/public/javascripts/jquery-1.6.4.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+<link rel="stylesheet"
+	href="http://ytk.fbcontent.cn/s/86194205-Main.css">
+<!--[if lte IE 8]><link id="ie8Hack" rel="stylesheet" href="http://ytk.fbcontent.cn/s/70fb8b0f-lte-ie8.css"/><![endif]-->
+<!--[if lte IE 7]><link id="ie7Hack" rel="stylesheet" href="http://ytk.fbcontent.cn/s/e1615147-lte-ie7.css"/><![endif]-->
+<!--[if gte IE 9]><link id="ie9Hack" rel="stylesheet" href="http://ytk.fbcontent.cn/s/26d1828d-gte-ie9.css"/><![endif]-->
+</head>
+<style>
+.container:before, .container:after {
+	padding-top:150px;;
+}
+</style>
+<body data-environment="production" data-page-name="Login">
+	<div class="wrap">
+		<div class="repeat-x default-t">
+			<div class="header-left layout default-lt"></div>
+			<div class="header-right layout default-rt"></div>
+		</div>
+		<div class="default-left repeat-y default-l"></div>
+		<div class="default-right repeat-y default-r"></div>
+		<div class="container body-wrap main">
+		<h2 style="text-align:center;">欢迎来到智题</h2>
+		<br>
+		<br><br>
+			<div class="row">
+				<div class="span8 offset4 login-form-wrap form-wrap" id="loginForm">
+					<iframe src="about:blank" name="submitIframe" frameborder="0"
+						class="hide"></iframe>
+					<form class="form" method="post" target="submitIframe"
+						action="@{Secure.login}">
+						<div class="form-content">
+							<div id="loginFormEmail" class="item-wrap text-item-wrap">
+								<label for="loginFormEmailInput">帐号:</label> <span
+									class="text-wrap"> <input id="loginFormEmailInput"
+									name="name" type="text" class="" placeholder="请输入学号">
+								</span> <span class="item-message help-inline"></span>
+							</div>
+							<div id="loginFormTextPassword" class="item-wrap text-item-wrap">
+								<label for="loginFormTextPasswordInput">密码:</label> <span
+									class="text-wrap"> <input
+									id="loginFormTextPasswordInput" name="password" type="password"
+									class="" placeholder="请输入密码">
+								</span> <span class="item-message help-inline"></span>
+							</div>
+						</div>
+						<div class="button-row">
+							<button type="submit" class="visible-hidden"></button>
+							<span class="btn btn-primary btn-xxlarge fir-wrap submit-button"
+								tabindex="0" onclick="javascript:login()"> <span class="btn-inner"> <span
+									class="fir fir-btn-normal-login"><span class="fir-text">登录</span></span>
+							</span>
+							</span>
+						</div>
+						<div class="form-message text-red"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script>
+		function login() {
+			$.post("@{Secure.loginWithXHR}", {
+				username:$("input[name='name']").val(),
+				password:$("input[name='password']").val(),
+			}, function(data) {
+				if (data.error) {
+					alert(data.error);
+					return;
+				}
+				location.href=data.url;
+			})
+		}
+		</script>
+</body>
+</html>

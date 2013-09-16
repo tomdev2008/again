@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>拖拽排序</title>
+        <meta charset="${_response_encoding}">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/jquery-ui-1.8.18.custom.css'}">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/jquery.loadmask.css'}">
+        <script src="@{'/public/javascripts/jquery-1.6.4.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        <script src="@{'/public/javascripts/jquery-ui-1.8.18.custom.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+		<script src="@{'/public/javascripts/jquery.loadmask.js'}" type="text/javascript" charset="utf-8"></script>
+        <script>
+		    var func_cdnproxy = #{jsAction @Cdn.cdnproxy(':url') /}
+		</script>
+		<style>
+		#sortable { list-style-type: none; margin: 0; padding: 0;}
+		#sortable li {margin: 3px 3px 3px 0;font-size:0.8em; padding: 1px; float: left; width: 150px; height: 150px; text-align: center; }
+		#sortable li div{border:1px solid;border-color:black;width:130px;height:140px;background:#FEF8BE;cursor: pointer;}
+		.sortNum{border-bottom:1px solid black;width:130px;display:block;}
+		</style>
+    </head>
+    <body>
+    	<ul id="sortable">
+    		#{list items:items, as:'t'}
+    			<li><div class="border"><span class="sortNum"></span><br><input type="hidden" value="${t._id}" class="hiddenId"><span style="width:80px;">${t.name}</span><br><img width=80 src="${t.cover.cdn('240x254')}"/></div></li>
+    		#{/list}
+    	</ul>
+    	<div style="clear:both;text-align:center;padding-top:20px;padding-bottom:20px;">
+    	<input type="button" id="save" value="保存该排序方式"/>
+    	<input type="button" id="cancel" value="取消排序"/>
+    	</div>
+    </body>
+    <script>
+    $(function() {
+        $("#sortable").sortable({
+        	stop: function() {
+        		sortNum(); 
+        	}
+        });
+        $("#sortable").disableSelection();
+        sortNum();
+        function sortNum() {
+        	var num = 1;
+        	$("#sortable li").each(function() {
+        		$(this).find(".sortNum").html(num);
+        		num++;
+        	})
+        }
+        $("#save").button().click(function() {
+        	$("body").mask("正在排序中。。。。。。请稍后");
+        	var hiddenIds = [];
+        	$(".hiddenId").each(function() {
+        		hiddenIds.push($(this).val());
+        	})
+        	$.post("@{ajax.SortItems.sortDesc}",{
+        		ids:hiddenIds.join(","),
+        		total:"${total}",
+            	tag:"${tag}"
+        	},function(data) {
+        		if (data.error) {
+        			alert(data.error);
+        			window.location.reload();
+        		}
+        		alert("排序成功，关闭页面");
+        		window.close();
+        	})
+        });
+        $("#cancel").button().click(function() {
+        	window.close();
+        });
+	});
+   </script>
+</html>

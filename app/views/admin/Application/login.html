@@ -1,0 +1,51 @@
+#{extends 'admin/main.html' /} #{set title:'登陆' /}
+#{set 'moreScripts'}
+<script src="@{'/public/javascripts/jquery.loadmask.js'}" type="text/javascript" charset="utf-8"></script>
+#{/set}
+<script type="text/javascript">
+$("#header").hide()
+</script>
+#{set 'moreStyles'}
+<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/jquery.loadmask.css'}">
+<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/login.css'}">
+#{/set}
+<form id="login">
+	<h1>后台管理</h1>
+	<fieldset id="inputs">
+		<input id="username" type="text" placeholder="用户名" autofocus>
+		<input id="password" type="password" placeholder="密码">
+	</fieldset>
+	<fieldset id="actions">
+		<input type="button" id="submit" value="登录" onclick="doLogin()">
+	</fieldset>
+</form>
+<script type="text/javascript">
+    $("#password").keyup(function(event) {
+        if (event.keyCode == 13) {
+            doLogin();
+        }
+    });
+	function doLogin() {
+		var username = $('#username').val();
+		if (!username) {
+			alert('请输入用户名');
+			$('#username').focus().select();
+			return;
+		}
+		var pwd = $('#password').val();
+        $("#login").mask("正在登录中。。。");
+        $.post("@{admin.Secure.loginWithXHR}", {
+			username : username,
+			password : pwd
+		}, function(data) {
+			data = data || {};
+			if (data.error) {
+				alert(data.error);
+                $("#login").unmask();
+			} else {
+				window.location.href = data.url || "/";
+			}
+		})
+	}
+</script>
+

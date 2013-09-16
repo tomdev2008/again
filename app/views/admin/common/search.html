@@ -1,0 +1,28 @@
+<style>
+.search-toolbar{
+	width:910px;
+}
+.search-input{
+	border: 1px solid #D3D3D3;
+    height: 30px;
+    line-height: 24px;
+    padding-left: 10px;
+    width:790px;
+}
+</style>
+<div class="search-toolbar">
+	<input type="text" placeholder="按名称搜索" class="search-input" name="keyword">
+    <a href="javascript:;" class="btn search">搜 索</a>
+</div>
+<script>
+	$(function() {
+		$(".search").click(function() {
+			var $this = $(this);
+			var keyword = $this.prev().val();
+			var tableList = $this.closest(".search-toolbar").next().next().attr("id").split("-")[0];
+			$("#" + tableList).datagrid("reload", {
+				keyword:keyword
+			});
+		})
+	})
+</script>

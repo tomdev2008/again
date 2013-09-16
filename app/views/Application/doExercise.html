@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="default-layout" lang="zh-CN">
+<head>
+<link rel="icon" type="image/vnd.microsoft.icon"
+	href="http://ytk.fbcontent.cn/s/c34fd141-favicon.ico">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<title></title>
+<link rel="stylesheet" href="http://yuantiku.com/s/bd6802a2-Main.css">
+<!--[if lte IE 8]><link id="ie8Hack" rel="stylesheet" href="http://ytk.fbcontent.cn/s/70fb8b0f-lte-ie8.css"/><![endif]-->
+<!--[if lte IE 7]><link id="ie7Hack" rel="stylesheet" href="http://ytk.fbcontent.cn/s/e1615147-lte-ie7.css"/><![endif]-->
+<!--[if gte IE 9]><link id="ie9Hack" rel="stylesheet" href="http://ytk.fbcontent.cn/s/26d1828d-gte-ie9.css"/><![endif]-->
+</head>
+%{def user = controllers.Secure.getLoginUser();}%
+<body data-environment="production" data-page-name="Home">
+	<div class="wrap">
+		<div class="repeat-x default-t">
+			<div class="header-left layout default-lt"></div>
+			<div class="header-right layout default-rt"></div>
+		</div>
+		<div class="default-left repeat-y default-l"></div>
+		<div class="default-right repeat-y default-r"></div>
+		<div class="header">
+			<div class="navbar-hd clearfix">
+				<div class="pull-right navbar-links">
+					<a class="mobile-link" href="javascript:void(0)"> <span
+						class="sprite sprite-mobile-gray i-20"></span> 手机客户端
+					</a> <a href="javascript:void(0)" class="user-nav user-menu-trigger">
+						<span class="sprite sprite-profile i-20"></span> <span
+						class="sprite sprite-profile-tip"> <span class="email">${user.userName}</span>
+							<span class="sprite sprite-profile-tip-arrow"></span>
+					</span>
+					</a>
+				</div>
+			</div>
+			<div class="navbar-bd">
+				<div class="container">
+					<ul class="nav main-nav">
+						<li class="fir-wrap active"><a href="javascript:void(0)"
+							class="fir-wrap"> <span class="fir fir-header-exercise"><span
+									class="fir-text">练习与模考</span></span>
+						</a>
+					</ul>
+				</div>
+			</div>
+			<span class="repeat-x header-shadow-repeat header-shadow-repeat-l"></span>
+			<div class="header-shadow"></div>
+			<span class="repeat-x header-shadow-repeat header-shadow-repeat-r"></span>
+		</div>
+		<div class="container body-wrap main">
+			<div class="clearfix clearboth"></div>
+			<div class="home-wrap">
+				<div class="section-wrap">
+					<div class="section">
+						<span class="sprite sprite-section-smart-15 pull-left"></span>
+						<div class="overflow">
+							<h2>
+								<span class="fir fir-title-instant-15"><span
+									class="fir-text">快速智能练习</span></span>
+							</h2>
+							<div class="content"></div>
+							<div class="button-row">
+							<a href="@{Exercises.start}?courseName=${courseName}">
+								<span class="btn btn-primary create-exercise fir-wrap" data-instant=true><span
+									class="btn-inner"> <span class="fir fir-btn-normal-csk"><span
+											class="fir-text">开始练习</span></span>
+								</span></span>
+							</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="section-wrap section-instant section-right">
+					<div class="section">
+						<span class="sprite sprite-section-csk pull-left"></span>
+						<div class="overflow">
+							<h2>
+								<span class="fir fir-title-csk"><span class="fir-text">专项智能练习</span></span>
+							</h2>
+							<div class="content"></div>
+							<div class="button-row">
+								<span class="btn button-1 btn-primary create-exercise fir-wrap"
+									data-exam-id="1" data-type="3" disabled=""><span
+									class="btn-inner"> <span
+										class="fir fir-btn-normal-paper-1"><span
+											class="fir-text">卷一</span></span>
+								</span></span> <span class="btn button-2 btn-primary create-exercise fir-wrap"
+									data-exam-id="2" data-type="3" disabled=""><span
+									class="btn-inner"> <span
+										class="fir fir-btn-normal-paper-2"><span
+											class="fir-text">卷二</span></span>
+								</span></span> <span class="btn button-3 btn-primary create-exercise fir-wrap"
+									data-exam-id="3" data-type="3" disabled=""><span
+									class="btn-inner"> <span
+										class="fir fir-btn-normal-paper-3"><span
+											class="fir-text">卷三</span></span>
+								</span></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="section-wrap">
+					<div class="section">
+						<span class="sprite sprite-section-paper pull-left"></span>
+						<div class="overflow">
+							<h2>
+								<span class="fir fir-title-paper"><span class="fir-text">真题模考</span></span>
+							</h2>
+							<div class="content"></div>
+							<div class="button-row">
+								<span class="btn btn-primary select-paper fir-wrap" disabled=""><span
+									class="btn-inner"> <span
+										class="fir fir-btn-normal-paper"><span class="fir-text">挑选真题，立即模考</span></span>
+								</span></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="section-wrap section-template section-right">
+					<div class="section">
+						<span class="sprite sprite-section-smart-paper pull-left"></span>
+						<div class="overflow">
+							<h2>
+								<span class="fir fir-title-instant-paper"><span
+									class="fir-text">组卷模考</span></span>
+							</h2>
+							<div class="content"></div>
+							<div class="button-row">
+								<span
+									class="btn button-1 btn-primary create-exercise fir-wrap btn-group-first"
+									data-exam-id="1" data-type="2" disabled=""><span
+									class="btn-inner"> <span
+										class="fir fir-btn-normal-paper-1"><span
+											class="fir-text">卷一</span></span>
+								</span></span> <span class="btn btn-primary download-exercise btn-group-last"
+									title="下载套卷，打印做题" data-exam-id="1" data-type="2"
+									data-title="国家司法考试模拟考试" data-subtitle="（卷一）" disabled=""><span
+									class="btn-inner"> <span
+										class="sprite sprite-printer-blue i-20"></span>
+								</span></span> <span
+									class="btn button-2 btn-primary create-exercise fir-wrap btn-group-first"
+									data-exam-id="2" data-type="2" disabled=""><span
+									class="btn-inner"> <span
+										class="fir fir-btn-normal-paper-2"><span
+											class="fir-text">卷二</span></span>
+								</span></span> <span class="btn btn-primary download-exercise btn-group-last"
+									title="下载套卷，打印做题" data-exam-id="2" data-type="2"
+									data-title="国家司法考试模拟考试" data-subtitle="（卷二）" disabled=""><span
+									class="btn-inner"> <span
+										class="sprite sprite-printer-blue i-20"></span>
+								</span></span> <span
+									class="btn button-3 btn-primary create-exercise fir-wrap btn-group-first"
+									data-exam-id="3" data-type="2" disabled=""><span
+									class="btn-inner"> <span
+										class="fir fir-btn-normal-paper-3"><span
+											class="fir-text">卷三</span></span>
+								</span></span> <span class="btn btn-primary download-exercise btn-group-last"
+									title="下载套卷，打印做题" data-exam-id="3" data-type="2"
+									data-title="国家司法考试模拟考试" data-subtitle="（卷三）" disabled=""><span
+									class="btn-inner"> <span
+										class="sprite sprite-printer-blue i-20"></span>
+								</span></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="section-wrap section-last">
+					<div class="section">
+						<span class="sprite sprite-section-sprint pull-left"></span>
+						<div class="overflow">
+							<h2>
+								<span class="fir fir-title-sprint"><span class="fir-text">考前冲刺</span></span>
+							</h2>
+							<div class="content"></div>
+							<div class="button-row">
+								<span class="btn btn-primary fir-wrap sprint-need-payment"
+									disabled=""><span class="btn-inner"> <span
+										class="fir fir-btn-hot-paper"><span class="fir-text">新增考点模测</span></span>
+								</span></span> &nbsp;&nbsp;&nbsp; <span
+									class="btn btn-primary fir-wrap sprint-need-payment"
+									disabled=""><span class="btn-inner"> <span
+										class="fir fir-btn-special-paper"><span
+											class="fir-text">考前密卷</span></span>
+								</span></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="section-wrap section-right section-last">
+					<div class="section">
+						<span class="sprite sprite-section-continue pull-left"></span>
+						<div class="overflow">
+							<h2>
+								<span class="fir fir-title-continue"><span
+									class="fir-text">继续上次练习</span></span>
+							</h2>
+							<div class="content">
+								<p></p>
+							</div>
+							<div class="button-row">
+								<span class="btn btn-primary fir-wrap" disabled=""><span
+									class="btn-inner"> <span
+										class="fir fir-btn-normal-continue"><span
+											class="fir-text">继续练习</span></span>
+								</span></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="hide"></div>
+		</div>
+	</div>
+</body>
+</html>

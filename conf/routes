@@ -12,4 +12,16 @@ GET     /favicon.ico                            404
 GET     /public/                                staticDir:public
 
 # Catch all
+
+
+GET	   /admin								   controllers.admin.Application.index
+*	   /admin/login							   controllers.admin.Application.login
+*	   /admin/welcome	 					   controllers.admin.Application.welcome
+*	   /admin/menus/menuManager				   controllers.admin.Menus.menuManager
+*	   /admin/roles/roleManager				   controllers.admin.Roles.roleManager
+* 	   /admin/users/userManager				   controllers.admin.Users.userManager
+GET	   /admin/user/add						   controllers.admin.Users.add
+
+
+
 *       /{controller}/{action}                  {controller}.{action}

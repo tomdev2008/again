@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html class="default-layout" lang="zh-CN">
+<head>
+<link rel="icon" type="image/vnd.microsoft.icon"
+	href="http://ytk.fbcontent.cn/s/c34fd141-favicon.ico">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<title>快速智能练习</title>
+<link rel="stylesheet" href="http://ytk.fbcontent.cn/s/4f3e9931-Main.css">
+<!--[if lte IE 8]><link id="ie8Hack" rel="stylesheet" href="http://ytk.fbcontent.cn/s/70fb8b0f-lte-ie8.css"/><![endif]-->
+<!--[if lte IE 7]><link id="ie7Hack" rel="stylesheet" href="http://ytk.fbcontent.cn/s/f5298ff9-lte-ie7.css"/><![endif]-->
+<!--[if gte IE 9]><link id="ie9Hack" rel="stylesheet" href="http://ytk.fbcontent.cn/s/26d1828d-gte-ie9.css"/><![endif]-->
+</head>
+%{def user = controllers.Secure.getLoginUser();}%
+%{
+	List<String> ans = new ArrayList<String>();
+	ans.add("A");
+	ans.add("B");
+	ans.add("C");
+	ans.add("D");
+	ans.add("E");
+	ans.add("F");
+	ans.add("G");
+	ans.add("H");
+	ans.add("I");
+}%
+<body data-environment="production" data-page-name="ExerciseReport">
+	<div class="wrap">
+		<div class="repeat-x default-t">
+			<div class="header-left layout default-lt"></div>
+			<div class="header-right layout default-rt"></div>
+		</div>
+		<div class="default-left repeat-y default-l"></div>
+		<div class="default-right repeat-y default-r"></div>
+		<div class="header">
+			<div class="navbar-hd clearfix">
+				<div class="pull-right navbar-links">
+					<a class="mobile-link" 
+						href="javascript:void(0)"> <span
+						class="sprite sprite-mobile-gray i-20"></span> 手机客户端
+					</a> <a href="javascript:void(0)" class="user-nav user-menu-trigger"> <span
+						class="sprite sprite-profile i-20"></span> <span
+						class="sprite sprite-profile-tip"> <span class="email">${user.userName}</span>
+							<span class="sprite sprite-profile-tip-arrow"></span>
+					</span>
+					</a>
+				</div>
+			</div>
+			<div class="navbar-bd">
+				<div class="container">
+					<ul class="nav main-nav">
+						<li class="fir-wrap"><a href="javascript:void(0)"
+							class="fir-wrap"> <span class="fir fir-header-exercise"><span
+									class="fir-text">练习与模考</span></span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<span class="repeat-x header-shadow-repeat header-shadow-repeat-l"></span>
+			<div class="header-shadow"></div>
+			<span class="repeat-x header-shadow-repeat header-shadow-repeat-r"></span>
+		</div>
+		<div class="container body-wrap main">
+			<div
+				class="exercise-wrap exercise-report-wrap keypoint-exercise-report-wrap">
+				<div class="box-inner-wrap sidebar-wrap">
+					<div class="sprite sprite-box-inner-lt"></div>
+					<div class="repeat-x box-inner-t"></div>
+					<div class="sprite sprite-box-inner-rt"></div>
+					<div class="repeat-y box-inner-r"></div>
+					<div class="sprite sprite-box-inner-rb"></div>
+					<div class="repeat-y box-inner-l"></div>
+					<div class="sprite sprite-box-inner-lb"></div>
+					<div class="repeat-x box-inner-b"></div>
+					<div class="box-inner">
+						<div class="sidebar">
+							<div class="side-top sprite sprite-side-top-bg">
+								<span class="sprite sprite-report"></span>
+							</div>
+							<ul class="nav">
+								<li class="active"><a
+									href="javascript:void(0)">查看报告</a></li>
+								<li class="last"><a
+									href="javascript:void(0)">查看解析</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="box-inner-wrap paper-wrap">
+					<div class="sprite sprite-box-inner-lt"></div>
+					<div class="repeat-x box-inner-t"></div>
+					<div class="sprite sprite-box-inner-rt"></div>
+					<div class="repeat-y box-inner-r"></div>
+					<div class="sprite sprite-box-inner-rb"></div>
+					<div class="repeat-y box-inner-l"></div>
+					<div class="sprite sprite-box-inner-lb"></div>
+					<div class="repeat-x box-inner-b"></div>
+					<div class="box-inner">
+						<div class="exercise-bd">
+							<div class="report-info text-small">
+								<p>当前练习：快速智能练习</p>
+								<p>交卷时间：${(new Date()).format("yyyy年MM月dd日HH:mm")}</p>
+							</div>
+							<div class="report-score clearfix">
+								<div class="score">
+									<div class="score-container">
+										<p class="text-small muted">本次练习 ${exercises.size()} 道，你答对了：</p>
+										<p class="text-blue">
+											<span class="text-xxlarge">${correctCnt}</span> &nbsp;&nbsp;道
+										</p>
+									</div>
+								</div>
+								<div class="answer-sheet-container">
+									<br>
+									<div class="answer-sheet-wrap sheet-wrap">
+										<div class="answer-sheet columns-5">
+										#{list items:exercises,as:'e'}
+										#{if e.currentScore == 1}
+											<a class="col-1  question sprite sprite-answer-correct" href="#question${e_index}">
+											${e_index}
+											</a>
+										#{/if} #{else}
+											<a class="col-1  question sprite sprite-answer-incorrect" href="#question${e_index}">
+											${e_index}
+											</a>
+										#{/else}
+										#{/list}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="split-box">
+								<span class="sprite sprite-box-split-l"></span><span
+									class="repeat-x box-split"></span><span
+									class="sprite sprite-box-split-r"></span>
+							</div>
+							
+							#{list items:exercises,as:'e'}
+							<div class="question-with-solution-wrap question-wrap ${e.currentScore == 1?'correct':''}" data-id="${e._id}"
+								data-question-index="${e_index}" id="question${e_index}" data-collected="${e.currentScore == 1?'true':'false'}">
+								<div class="question expanded">
+									<div class="content clearfix">
+									<div class="index pull-left">${e_index}</div>
+									<div class="overflow">
+									<p>${e.subject.title}</p>
+									</div>
+									</div>
+									<div class="options">
+									#{list items:e.subject.options,as:'o'}
+										%{
+											boolean flag = false;
+											for (models.Option o2 : e.subject.answer) {
+												if (o2.content.equals(o.content)) {
+													flag = true;
+													break;
+												}
+											}
+										}%
+									<div class="option ${flag == true?'correct':''}"><span class="lbl">${ans.get(o_index - 1)}.</span> ${o.content}</div>
+									#{/list}
+									</div>
+									<div class="answer clearfix">
+									<!--
+									<a class="expand-solution pull-right">展开解析<i class="sprite sprite-circle-down-arrow i-20"></i></a> 
+									<a class="shrink-solution pull-right">收起解析<i class="sprite sprite-circle-up-arrow i-20"></i></a> 
+									-->
+									<span class="answer-meta"> 正确答案是
+										<span class="correct-answer">${e.subject.answer[0].content}</span>
+										${e.currentScore == 1?"回答正确":e.currentScore == 0?"回答错误，您答的是:" + e.userAnswer[0].content:"您没有答这个问题"} 
+									</span>
+									</div>
+								</div>
+							<div class="solution-wrap expanded">
+								<div class="solution-item clearfix">
+									<div class="pull-left"><span class="text-label key-label"><span
+										class="text-label-inner"><i class="sprite sprite-circle-paper"></i>
+									解析</span></span>
+									</div>
+									<div class="overflow">
+									${e.subject.solution}
+									</div>
+								</div>
+							</div>
+							</div>
+							#{/list}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>

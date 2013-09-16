@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="default-layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon" type="image/vnd.microsoft.icon"
+	href="http://ytk.fbcontent.cn/s/c34fd141-favicon.ico">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<title></title>
+<link rel="stylesheet"
+	href="http://ytk.fbcontent.cn/s/c418d379-Main.css">
+<!--[if lte IE 8]><link id="ie8Hack" rel="stylesheet" href="http://ytk.fbcontent.cn/s/70fb8b0f-lte-ie8.css"/><![endif]-->
+<!--[if lte IE 7]><link id="ie7Hack" rel="stylesheet" href="http://ytk.fbcontent.cn/s/e1615147-lte-ie7.css"/><![endif]-->
+<!--[if gte IE 9]><link id="ie9Hack" rel="stylesheet" href="http://ytk.fbcontent.cn/s/26d1828d-gte-ie9.css"/><![endif]-->
+</head>
+<style>
+.table {
+	width: auto;
+}
+
+.right-column {
+	margin-left: 260px;
+}
+</style>
+%{def user = controllers.Secure.getLoginUser();}%
+<body data-environment="production" data-page-name="Report">
+<div class="wrap">
+<div class="repeat-x default-t">
+<div class="header-left layout default-lt"></div>
+<div class="header-right layout default-rt"></div>
+</div>
+
+<div class="default-left repeat-y default-l"></div>
+<div class="default-right repeat-y default-r"></div>
+<div class="header">
+<div class="navbar-hd clearfix">
+<div class="pull-right navbar-links"><a
+	href="http://yuantiku.com/kyzz/report#"
+	class="user-nav user-menu-trigger"> <span
+	class="sprite sprite-profile i-20"></span> <span
+	class="sprite sprite-profile-tip"> <span class="email">${user.userName}</span>
+<span class="sprite sprite-profile-tip-arrow"></span> </span> </a></div>
+</div>
+<div class="navbar-bd">
+<div class="container">
+<ul class="nav main-nav">
+	<li class="fir-wrap"><a href="http://yuantiku.com/kyzz"
+		class="fir-wrap"> <span class="fir fir-header-exercise"><span
+		class="fir-text">练习与模考</span></span> </a></li>
+</ul>
+</div>
+</div>
+<span class="repeat-x header-shadow-repeat header-shadow-repeat-l"></span>
+<div class="header-shadow"></div>
+<span class="repeat-x header-shadow-repeat header-shadow-repeat-r"></span>
+</div>
+<div class="container body-wrap main">
+<div class="report-wrap user-report-wrap row">
+<div class="span12"></div>
+<div class="span12 meta-area">
+<div class="box-wrap score-box">
+<div class="sprite sprite-box-lt"></div>
+<div class="repeat-x box-t"></div>
+<div class="sprite sprite-box-rt"></div>
+<div class="repeat-y box-r"></div>
+<div class="sprite sprite-box-rb"></div>
+<div class="repeat-y box-l"></div>
+<div class="sprite sprite-box-lb"></div>
+<div class="repeat-x box-b"></div>
+<div class="box">
+<div class="box-bd clearfix">
+<div class="left-column pull-left">
+<div class="score-info forecast-score" title="">
+<div class="report-circle sprite sprite-blue-circle"><span
+	class="number text-xxlarge" data-first=""> 60 </span> <span
+	class="unit">分</span></div>
+<div class="lbl-wrap"><span class="lbl-large">预测分</span></div>
+</div>
+<div class="item-row"><span class="lbl">同类考生平均预测分：</span> <span
+	class="score"><span class="number user-index">66</span><span
+	class="number total-user"><span class="unit">分</span></span></span></div>
+<div class="item-row last"><span class="lbl">已击败同类考生：</span> <span
+	class="score"><span class="number">45</span><span class="unit">%</span></span>
+</div>
+</div>
+<div class="right-column">
+<div class="user-csk-table-wrap csk-table-wrap">
+<table class="csk-table table">
+	<thead>
+		<tr>
+			<th class="name-col">考点</th>
+			<th class="count-col">答题量</th>
+			<th class="capacity-col" style="width:30px;">准确率</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="keypoint keypoint-level-0" data-id="1">
+			<td class="name-col"><span class="text toggle-expand"> <span
+				class="sprite sprite-expand i-20"></span> 马克思主义基本原理概论 </span></td>
+			<td class="count-col"><span class="keypoint-progress-wrap">
+			<span class="keypoint-progress-bg slide slide-progress-left"><span
+				class="slide slide-progress-right"></span></span> <span
+				class="keypoint-progress-fill slide slide-progress-fill-left"
+				style="width: 0.0%"><span
+				class="slide slide-progress-fill-right"></span></span> </span> <span
+				class="keypoint-number"> 6道 / 892道 </span></td>
+			<td class="capacity-col last">
+			<span class="keypoint-progress-bg slide slide-progress-left"><span
+				class="slide slide-progress-right"></span></span> <span
+				class="keypoint-progress-fill slide slide-progress-fill-left"
+				style="width: 0.0%"><span
+				class="slide slide-progress-fill-right"></span></span> </span> <span
+				class="keypoint-number"> 10% </span>
+			</td>
+		</tr>
+		<tr class="keypoint keypoint-level-1" data-id="11" data-parent-id="1">
+			<td class="name-col"><span class="text toggle-expand"> <span
+				class="sprite sprite-expand i-20"></span> 马克思主义总论 </span></td>
+			<td class="count-col"><span class="keypoint-progress-wrap">
+			<span class="keypoint-progress-bg slide slide-progress-left"><span
+				class="slide slide-progress-right"></span></span> <span
+				class="keypoint-progress-fill slide slide-progress-fill-left"
+				style="width: 0.0%"><span
+				class="slide slide-progress-fill-right"></span></span> </span> <span
+				class="keypoint-number"> 0道 / 26道 </span></td>
+			<td class="capacity-col last">
+			<span class="keypoint-progress-bg slide slide-progress-left"><span
+				class="slide slide-progress-right"></span></span> <span
+				class="keypoint-progress-fill slide slide-progress-fill-left"
+				style="width: 0.0%"><span
+				class="slide slide-progress-fill-right"></span></span> </span> <span
+				class="keypoint-number"> 10% </span>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="box-wrap">
+<div class="sprite sprite-box-lt"></div>
+<div class="repeat-x box-t"></div>
+<div class="sprite sprite-box-rt"></div>
+<div class="repeat-y box-r"></div>
+<div class="sprite sprite-box-rb"></div>
+<div class="repeat-y box-l"></div>
+<div class="sprite sprite-box-lb"></div>
+<div class="repeat-x box-b"></div>
+<div class="box">
+<div class="box-bd clearfix">
+<h3 class="text-label text-label-green"><span
+	class="text-label-inner bold">今日推荐计划</span></h3>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="application/json" id="courseData"
+	data-json="{&quot;id&quot;:4,&quot;name&quot;:&quot;&quot;,&quot;prefix&quot;:&quot;kyzz&quot;,&quot;scannable&quot;:true,&quot;modules&quot;:[{&quot;type&quot;:&quot;latest&quot;,&quot;desc&quot;:null,&quot;hidden&quot;:false}],&quot;properties&quot;:null}"></script>
+<script type="text/javascript"
+	src="http://ytk.fbcontent.cn/s/092ddb5c-Main.preload.js"
+	charset="utf-8"></script>
+<script type="text/javascript"
+	src="http://ytk.fbcontent.cn/s/bab9487b-Main.combo.js"
+	data-main="uni/bootstrap/Main" charset="utf-8"></script>
+</body>
+</html>
