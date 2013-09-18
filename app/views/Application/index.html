@@ -1,232 +1,116 @@
 #{extends 'main.html' /} #{set title:'个人主页' /}
-<style>
-.tree {
-    min-height:20px;
-    padding:19px;
-    margin-bottom:20px;
-    background-color:#fbfbfb;
-    border:1px solid #999;
-    -webkit-border-radius:4px;
-    -moz-border-radius:4px;
-    border-radius:4px;
-    -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);
-    -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);
-    box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05)
-}
-.tree li {
-    list-style-type:none;
-    margin:0;
-    padding:10px 5px 0 5px;
-    position:relative
-}
-.tree li::before, .tree li::after {
-    content:'';
-    left:-20px;
-    position:absolute;
-    right:auto
-}
-.tree li::before {
-    border-left:1px solid #999;
-    bottom:50px;
-    height:100%;
-    top:0;
-    width:1px
-}
-.tree li::after {
-    border-top:1px solid #999;
-    height:20px;
-    top:25px;
-    width:25px
-}
-.tree li span {
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border:1px solid #999;
-    border-radius:5px;
-    display:inline-block;
-    padding:3px 8px;
-    text-decoration:none
-}
-.tree li.parent_li>span {
-    cursor:pointer
-}
-.tree>ul>li::before, .tree>ul>li::after {
-    border:0
-}
-.tree li:last-child::before {
-    height:30px
-}
-.tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
-    background:#eee;
-    border:1px solid #94a0b4;
-    color:#000
-}
-</style>
-<div class="navbar">
-	<div class="navbar-inner">
-		<div class="container">
-			<a class="btn btn-navbar" data-toggle="collapse"
-				data-target=".nav-collapse"> <span class="icon-bar"></span> <span
-				class="icon-bar"></span> <span class="icon-bar"></span>
-			</a> <a class="brand" href="#">智题</a>
-			<div class="nav-collapse collapse">
-				<ul class="nav">
-					<li class="active"><a href="#">个人主页</a></li>
-				</ul>
-				<ul class="nav">
-					<li><a href="#">历史题库</a></li>
-				</ul>
-				<ul class="nav">
-					<li><a href="#">错题集</a></li>
-				</ul>
-				<ul class="nav pull-right">
-					<li id="fat-menu" class="dropdown"><a href="#" id="drop3"
-						role="button" class="dropdown-toggle" data-toggle="dropdown">用户xxx，您好<b
-							class="caret"></b>
-					</a>
-						<ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
-							<li role="presentation"><a role="menuitem" tabindex="-1"
-								href="#">个人中心</a></li>
-							<li role="presentation"><a role="menuitem" tabindex="-1"
-								href="#">修改密码</a></li>
-							<li role="presentation"><a role="menuitem" tabindex="-1"
-								href="#">退出登陆</a></li>
-						</ul></li>
-				</ul>
+<script src="@{'/public/javascripts/Chart.min.js'}"
+	type="text/javascript" charset="${_response_encoding}"></script>
+<div class="container main">
+	<div class="tabbable">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#tab1" data-toggle="tab">GCT英语</a></li>
+			<li><a href="#tab2" data-toggle="tab">GCT逻辑</a></li>
+			<li><a href="#tab3" data-toggle="tab">GCT数学</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="tab1">
+				<div class="row-fluid">
+					<div class="span6 panel">
+						<div class="myScore row">
+							<div class="span6">
+								<p>预测分：</p>
+								<h1>60 <span class="score-text">分</span></h1>
+								<p>同类考生平均预测分：</p>
+								<h4>80 <span class="score-text">分</span></h4>
+								<p>已击败同类考生</p>
+								<h4>50 <span class="score-text">%</span></h4>
+							</div>
+							<div class="span6">
+								<p>答题总量：</p>
+								<h1>500 <span class="score-text">道</span></h1>
+								<p>同类考生平均答题量：</p>
+								<h4>172 <span class="score-text">道</span></h4>
+								<p>已击败同类考生</p>
+								<h4>20 <span class="score-text">%</span></h4>
+							</div>
+						</div>
+					</div>
+					<div class="span6 panel">
+						<canvas id="myChart" width=400 height=250></canvas>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="myExercise span6 panel">
+						<p>已强化考点：</p>
+						<h4>10 <span class="score-text">个</span></h4>
+						<p>已提升考点：</p>
+						<h4>20 <span class="score-text">个</span></h4>
+						<p>练习次数：</p>
+						<h4>11 <span class="score-text">个</span></h4>
+						<p>已练习时间：</p>
+						<h4>5 <span class="score-text">小时</span>30 <span class="score-text">分钟</span></h4>
+					</div>
+					<div class="span6 panel">
+						<canvas id="myChart2" width=300 height=300></canvas>
+					</div>
+				</div>
+				<div class="row-fluid">#{include 'common/tree.html' /}</div>
+				<div class="row-fluid panel"
+					style="padding-top: 10px; padding-bottom: 10px;">
+					<div class="row-fluid">
+						<div class="span4" align=center>
+							<span class="button-wrap"><a href="#"
+								class="button button-circle button-primary">快速练习</a></span>
+						</div>
+						<div class="span4" align=center>
+							<span class="button-wrap"><a href="#"
+								class="button button-circle button-primary">专项练习</a></span>
+						</div>
+						<div class="span4" align=center>
+							<span class="button-wrap"><a href="#"
+								class="button button-circle button-primary">press me</a></span>
+						</div>
+					</div>
+				</div>
 			</div>
+			<div class="tab-pane" id="tab2"></div>
+			<div class="tab-pane" id="tab3"></div>
 		</div>
 	</div>
 </div>
-<div class="tabbable">
-	<ul class="nav nav-tabs">
-		<li class="active"><a href="#tab1" data-toggle="tab">GCT英语</a></li>
-		<li><a href="#tab2" data-toggle="tab">GCT逻辑</a></li>
-		<li><a href="#tab3" data-toggle="tab">GCT数学</a></li>
-	</ul>
-	<div class="tab-content">
-		<div class="tab-pane active" id="tab1">
-			<canvas id="myChart" width="400" height="200"></canvas>
-			<canvas id="myChart2" width="400" height="200"></canvas>
-		</div>
-		<div class="tab-pane" id="tab2"></div>
-		<div class="tab-pane" id="tab3"></div>
-	</div>
-</div>
-
-<div class="tree well">
-    <ul>
-        <li>
-            <span><i class="icon-folder-open"></i> Parent</span> <a href="">Goes somewhere</a>
-            <ul>
-                <li>
-                	<span><i class="icon-minus-sign"></i> Child</span> <a href="">Goes somewhere</a>
-                    <ul>
-                        <li>
-	                        <span><i class="icon-leaf"></i> Grand Child</span> <a href="">Goes somewhere</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                	<span><i class="icon-minus-sign"></i> Child</span> <a href="">Goes somewhere</a>
-                    <ul>
-                        <li>
-	                        <span><i class="icon-leaf"></i> Grand Child</span> <a href="">Goes somewhere</a>
-                        </li>
-                        <li>
-                        	<span><i class="icon-minus-sign"></i> Grand Child</span> <a href="">Goes somewhere</a>
-                            <ul>
-                                <li>
-	                                <span><i class="icon-minus-sign"></i> Great Grand Child</span> <a href="">Goes somewhere</a>
-		                            <ul>
-		                                <li>
-			                                <span><i class="icon-leaf"></i> Great great Grand Child</span> <a href="">Goes somewhere</a>
-		                                </li>
-		                                <li>
-			                                <span><i class="icon-leaf"></i> Great great Grand Child</span> <a href="">Goes somewhere</a>
-		                                </li>
-		                             </ul>
-                                </li>
-                                <li>
-	                                <span><i class="icon-leaf"></i> Great Grand Child</span> <a href="">Goes somewhere</a>
-                                </li>
-                                <li>
-	                                <span><i class="icon-leaf"></i> Great Grand Child</span> <a href="">Goes somewhere</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-	                        <span><i class="icon-leaf"></i> Grand Child</span> <a href="">Goes somewhere</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <span><i class="icon-folder-open"></i> Parent2</span> <a href="">Goes somewhere</a>
-            <ul>
-                <li>
-                	<span><i class="icon-leaf"></i> Child</span> <a href="">Goes somewhere</a>
-		        </li>
-		    </ul>
-        </li>
-    </ul>
-</div>
-
 <script>
-var ctx = $("#myChart").get(0).getContext("2d");
-var myNewChart = new Chart(ctx);
-var data = {
-		labels : ["January","February","March","April","May","June","July"],
-		datasets : [
-			{
+	$(function() {
+		var ctx = $("#myChart").get(0).getContext("2d");
+		var myNewChart = new Chart(ctx);
+		var data = {
+			labels : [ "January", "February", "March", "April", "May", "June",
+					"July" ],
+			datasets : [ {
 				fillColor : "rgba(151,187,205,0.5)",
 				strokeColor : "rgba(151,187,205,1)",
 				pointColor : "rgba(151,187,205,1)",
 				pointStrokeColor : "#fff",
-				data : [28,48,40,19,96,27,100]
-			}
+				data : [ 28, 48, 40, 19, 96, 27, 100 ]
+			} ]
+		}
+		new Chart(ctx).Line(data, {});
+
+		var ctx = $("#myChart2").get(0).getContext("2d");
+		var myNewChart = new Chart(ctx);
+		var data = [ {
+			value : 30,
+			color : "#F7464A"
+		}, {
+			value : 50,
+			color : "#E2EAE9"
+		}, {
+			value : 100,
+			color : "#D4CCC5"
+		}, {
+			value : 40,
+			color : "#949FB1"
+		}, {
+			value : 120,
+			color : "#4D5360"
+		}
+
 		]
-	}
-new Chart(ctx).Line(data,{});
-
-var ctx = $("#myChart2").get(0).getContext("2d");
-var myNewChart = new Chart(ctx);
-var data = [
-        	{
-        		value: 30,
-        		color:"#F7464A"
-        	},
-        	{
-        		value : 50,
-        		color : "#E2EAE9"
-        	},
-        	{
-        		value : 100,
-        		color : "#D4CCC5"
-        	},
-        	{
-        		value : 40,
-        		color : "#949FB1"
-        	},
-        	{
-        		value : 120,
-        		color : "#4D5360"
-        	}
-
-        ]
-new Chart(ctx).Doughnut(data,{});
-
-
-$('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
-$('.tree li.parent_li > span').on('click', function (e) {
-    var children = $(this).parent('li.parent_li').find(' > ul > li');
-    if (children.is(":visible")) {
-        children.hide('fast');
-        $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
-    } else {
-        children.show('fast');
-        $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
-    }
-    e.stopPropagation();
-});
+		new Chart(ctx).Doughnut(data, {});
+	})
 </script>
