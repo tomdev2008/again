@@ -175,3 +175,9 @@ canvas {
 	margin-bottom: 15px;
 	padding: 7px 9px;
 }
+.exer-title{
+	border-bottom:1px solid black;
+}
+.exer-question {
+	border-bottom:1px dotted black;
+}
