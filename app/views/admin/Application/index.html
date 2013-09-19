@@ -1,0 +1,78 @@
+#{extends 'admin/main.html' /}
+#{set title:"管理主页" /}
+<div id="hd"><div id="user"><a class="updatePass" href="javascript:void(0)">${controllers.admin.Secure.getLoginUser().userName}</a><a class="logout" href="@{admin.Secure.logout}">退出</a></div>欢迎使用在线试题后台管理平台 </div>
+<div id="mainList">
+    <ul id="mainTree" class="easyui-tree"></ul>
+</div>
+<div id="mainContent"><iframe id="mainFrame" name="mainFrame" frameBorder="0" src="/admin/welcome"></iframe></div>
+<div id="ft">Copyright © 2005-2012 360.CN All Rights Reserved 360安全中心</div>
+<div id="updateUserPassDialog">
+	<div class="dialog-wapper">
+	<form id="updatePassForm">
+		<ul>
+			<li>原密码：</li>
+			<li><input type="password" name="pass" id="pass"/></li>
+			<li>新密码：</li>
+			<li><input type="password" name="newPass" id="newPass"/></li>
+			<li>新密码：</li>
+			<li><input type="password" name="confirmPass" id="confirmPass"/></li>
+		</ul>
+	</form>
+	</div>
+</div>
+<script src="@{'/public/admin/javascripts/views/Application/index.js'}" type="text/javascript" charset="utf-8"></script>
+<script>
+(function () {
+	$('#mainTree').tree({
+		url:"@{admin.Application.tree}",
+		animate:true
+	});
+	$(window).bind('resize', doResize);
+	doResize();
+	$(".updatePass").click(function() {
+		$("#updateUserPassDialog").dialog("open");
+	})
+	$("#updateUserPassDialog").dialog({
+		title:"修改密码",
+		closed:true,
+		modal:true,
+		resizable:false,
+		width:350,
+		height:270,
+		center: true,
+		draggable:true,
+		onOpen:function() {
+			$("#pass").val("");
+			$("#newPass").val("");
+			$("#confirmPass").val("");
+		},
+		buttons:[{
+			text:'修改密码',
+			handler:function(){
+				var formData=$("#updatePassForm").serialize();
+				$.ajax({
+					url:"@{admin.Users.updatePass}",
+					type: "POST",
+					data:formData,
+					dataType:"JSON",
+					success:function(data) {
+						if (data.error) {
+							alert(data.error);
+							return;
+						}
+						alert("修改成功");
+						$("#updateUserPassDialog").dialog("close");
+						window.location.href="@{admin.Secure.logout}"
+					}
+				})
+			}
+		},{
+			text:'关闭',
+			handler:function(){
+				$("#updateUserPassDialog").dialog("close");
+			}
+		}]
+	})
+	
+})();
+</script>

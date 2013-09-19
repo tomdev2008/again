@@ -1,5 +1,7 @@
 package models;
 
-public class UserExerciseHistory {
+import play.modules.morphia.Model;
+
+public class UserExerciseHistory extends Model {
 
 }

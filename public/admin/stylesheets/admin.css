@@ -1,0 +1,32 @@
+.round {border-radius: 6px;-moz-border-radius: 6px;-webkit-border-radius: 6px;border: 1px solid #fff;}
+.clear {clear:both;}
+.hide {display: none;}
+
+.fieldset {margin: 20px;}
+.fieldset table {width: 100%;border-collapse: collapse;}
+.fieldset tr {height:40px; line-height:40px;}
+.fieldset td {border:1px solid #dcdcdc;text-align:center;}
+.fieldset td.title {width:100px;background-color:#f5f5f5;}
+.fieldset td.value {background-color:#fff;text-align:left;padding-left:20px;}
+.input-text, .fieldset td.value input[type=text] {width:300px;height:30px;line-height:24px;padding-left:2px;border:1px solid #dcdcdc;}
+.fieldset .comment textarea {border:1px solid #dcdcdc; margin:10px;padding:2px;}
+
+#p_theme_recommendation, #p_ad {width: 600px; margin: 0 auto;}
+#p_theme_recommendation li { text-align: center; cursor:pointer;overflow: hidden;float: left; margin:40px 40px 0 0; width: 200px;height: 200px;position:relative;}
+#p_theme_recommendation .img {width:100%;height:100%;display: block; background: #999 url(../images/admins/list_add.png) no-repeat 50% 50%;}
+#p_theme_recommendation .inner {background: #999;color: #ddd;font-weight:bold;  font-size:16px;position: absolute;left: 0; top: 130px; width: 100%; text-align: center;}
+
+#b_dlg {position: absolute; background-color: #fff;border:1px solid #333;}
+#b_dlg .toolbar {line-height: 40px; height: 40px;background-color: #efefef;}
+#b_dlg .cancel {font-size: 16px;}
+
+#p_ad .content a {display: block;position: relative;}
+#p_ad .content a img {background: black;width: 700px;height: 300px;}
+#p_ad .content a .sd {background: black;opacity: .5;filter: alpha(opacity=50);-ms-opacity: .5;}
+#p_ad .content a .sd, #p_ad .content a p {position: absolute;left: 0;bottom: 0;width: 100%;text-indent: 24px;height: 50px;line-height: 50px;color: white;font-size: 20px;font-family: 'Microsoft YaHei';}
+#p_ad .content a p {text-align: left;}
+#p_ad table {border:1px solid #dcdcdc;}
+#p_ad table tr {height: 100px;}
+
+#b_ad_dlg {}
+#b_ad_dlg .value input {width: 280px;border: 1px solid #dcdcdc;height: 24px;line-height: 24px;}
