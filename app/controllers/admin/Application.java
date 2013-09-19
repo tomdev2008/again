@@ -17,7 +17,6 @@ import models.Tag;
 import models.User;
 import models.UserExercise;
 import models.enums.RoleType;
-import models.enums.UserExerciseStatus;
 import controllers.Public;
 import controllers.wither.LogPrinter;
 import play.Play;
