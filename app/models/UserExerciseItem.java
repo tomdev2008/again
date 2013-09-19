@@ -1,31 +1,29 @@
 package models;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
 
 import play.modules.morphia.Model;
+import play.modules.morphia.validation.Unique;
 
 @Entity
-public class ScheduleInfo extends Model {
+public class UserExerciseItem extends Model {
+	   
 
 	@Reference
 	public User user;
 	
 	@Reference
-	public Tag course;
+	public Subject subject;
 	
 	@Reference
-	public Tag grade;
-	
-	@Reference
-	public Tag tag;
-	
-	/**预测分数*/
-	public long KTS;
-	
+	public List<Option>  userAnswer;
+
 	public Date createAt = new Date();
-	
-	public Date UpdateAt = new Date();
+
 }

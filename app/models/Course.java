@@ -3,29 +3,22 @@ package models;
 import java.util.HashMap;
 import java.util.Map;
 
-import play.modules.morphia.Model;
-
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
 
+import play.modules.morphia.Model;
+
 @Entity
-public class Tag extends Model{
+public class Course extends Model{
 
 	@Reference
-	public Tag context;
-	
-	public Course course;
-	
+	public Course context;
+
 	public String name;
 	
 	public int index;
 	
-	public int subjectCnt;
-	
-	public Map<String,String> info = new HashMap<String,String>();
-	
-	
-	public Tag(String name,Tag tagContext){
+	public Course(String name,Course tagContext){
 		this.name=name;
 		this.context=tagContext;
 	}
@@ -33,12 +26,11 @@ public class Tag extends Model{
 	
 	public String getFullTagName(){
 		String tName = this.name;
-		Tag tag = this.context;
+		Course tag = this.context;
 		while(tag !=null){
 			tName = tag.name+":"+tName;
 			tag = tag.context;
 		}
 		return tName;
 	}
-
 }

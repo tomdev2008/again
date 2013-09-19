@@ -12,14 +12,11 @@ import java.util.Map;
 import java.util.Set;
 
 import models.Menu;
-import models.ScheduleInfo;
-import models.StudentProfile;
 import models.Subject;
 import models.Tag;
 import models.User;
 import models.UserExercise;
 import models.enums.RoleType;
-import models.enums.UserExerciseStatus;
 import controllers.Public;
 import controllers.wither.LogPrinter;
 import play.Play;

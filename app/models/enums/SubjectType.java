@@ -3,5 +3,8 @@ package models.enums;
 public enum SubjectType {
 
 	SINGLE,
-	MUTI
+	MUTI,
+	MATERIAL,
+	SUBS,
+	SUBM
 }
