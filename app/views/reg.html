@@ -1,0 +1,31 @@
+<html>
+<head>
+#{include 'common/include.html' /}
+#{set title:'login'/}
+<style>
+body {
+	padding-top: 5%;
+}
+</style>
+</head>
+<body>
+<div class="container content">
+<form class="form-signin">
+<h2 class="form-signin-heading">欢迎注册</h2><br>
+<p>用户名：（3-15个数字或英文字符）</p><input type="text" class="input-block-level" placeholder="请输入用户名">
+<p>邮箱：（可以使用邮箱进行登陆）</p><input type="text" class="input-block-level" placeholder="请输入您的邮箱">
+<p>密码：（6-20位数字或英文字符）</p><input type="password" class="input-block-level" placeholder="请输入密码">
+<p>确认密码：</p><input type="password" class="input-block-level" placeholder="请再次输入密码">
+<button class="reg-btn btn btn-large btn-primary"  type="button">注册</button>
+<button class="login-btn btn btn-large btn-success"  type="button">登陆</button>
+</form>
+</div>
+<script>
+$(function() {
+	$(".login-btn").click(function() {
+		location.href="@{Secure.login}";
+	})
+})
+</script>
+</body>
+</html>

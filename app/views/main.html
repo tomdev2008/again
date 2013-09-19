@@ -2,19 +2,8 @@
 <html lang="zh-CN">
     <head>
         <title>#{get 'title' /}</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" media="screen" href="@{'/public/bootstrap/css/bootstrap.min.css'}">
-        <link rel="stylesheet" media="screen" href="@{'/public/bootstrap/css/bootstrap-ie6.min.css'}">
-        <link rel="stylesheet" media="screen" href="@{'/public/bootstrap/css/ie.css'}">
-        <link rel="stylesheet" media="screen" href="@{'/public/bootstrap/css/font-awesome-ie7.min.css'}">
-        <link rel="stylesheet" media="screen" href="@{'/public/bootstrap/css/buttons.css'}">
-        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+        #{include 'common/include.html'/}
         #{get 'moreStyles' /}
-        <script src="@{'/public/javascripts/jquery.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-        <script src="@{'/public/bootstrap/js/bootstrap.min.js'}"></script>
-        <script src="@{'/public/bootstrap/js/bootstrap-ie.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-        <script src="@{'/public/bootstrap/js/buttons.js'}" type="text/javascript" charset="${_response_encoding}"></script>
         #{get 'moreScripts' /}
     </head>
     <body>

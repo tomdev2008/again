@@ -62,7 +62,6 @@ public class Secure extends Controller {
         flash.keep("url");
         render(LOGIN_URL);
     }
-
     public static void logout() {
         flash.clear();
         session.clear();
