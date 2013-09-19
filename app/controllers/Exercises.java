@@ -1,4 +1,4 @@
-//package controllers;
+package controllers;
 //
 //import java.util.ArrayList;
 //import java.util.Date;
@@ -17,14 +17,14 @@
 //import org.apache.commons.lang.time.DateUtils;
 //
 //import play.modules.morphia.Model.MorphiaQuery;
-//import play.mvc.Controller;
+import play.mvc.Controller;
 //import play.mvc.Util;
 //import play.mvc.With;
 //import service.TagService;
 //
 //import com.google.code.morphia.Key;
 //@With(Secure.class)
-//public class Exercises extends Controller {
+public class Exercises extends Controller {
 //
 //	public static void index(){
 //		
@@ -41,7 +41,7 @@
 //	}
 //	
 //	
-//	public static void start(String courseName){
+	public static void start(String courseName){
 //		Tag course = TagService.getTag(courseName);
 //		User user = Users.getLoginUser();
 //		if(user == null){
@@ -125,7 +125,8 @@
 //		}
 //		
 //		render(exercises);
-//	}
+		render();
+	}
 //	
 //	
 //	public static void end(String answer){
@@ -247,4 +248,4 @@
 //		}
 //		renderText(txt);
 //	}
-//}
+}
