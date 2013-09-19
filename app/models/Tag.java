@@ -20,6 +20,8 @@ public class Tag extends Model{
 	
 	public int index;
 	
+	public int subjectCnt;
+	
 	public Map<String,String> info = new HashMap<String,String>();
 	
 	
