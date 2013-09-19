@@ -1,59 +1,55 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import models.enums.UserExerciseStatus;
+import models.enums.ExerciseType;
 
-import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
 
 import play.modules.morphia.Model;
-import play.modules.morphia.validation.Unique;
 
-@Entity
 public class UserExercise extends Model {
 
 	@Reference
 	public User user;
 	
-    @Reference
-    public Tag course;
-    
-    @Reference
-    public Tag grade;
-    
 	@Reference
-	public Set<Tag> tags = new HashSet();
-	   
-	@Reference
-	@Unique
-	public Subject subject;
+	public Course course;
+
+	/**本次练习类型*/
+	public ExerciseType type;
 	
-	@Reference
-	public List<Option>  userAnswer;
+	/**本次练习名称*/
+	public String name;
 	
-	public UserExerciseStatus status;
-	
-	/**剩余重复次数(URT=User should Reapet Time)*/
-	public int URT=0;
-	public int currentScore=0;
-	public int displayCount=0;
-	public int completeCount=0;
-	public int correctCount=0;
-	public int mistakeCount=0;
-	public int weight=0;
-	public int isFC=0;
-	public int isSC=0;
 	/**
-	 * 0 新题  1历史题库  2知识点推荐
-	 * **/
-	public int AR=0;
-	public Date nextDate = new Date();
-	public Date subjectCreateAt = new Date();
-	public Date createAt = new Date();
-    public Date updateAt = new Date();
+	 * 本次考试得分
+	 */
+	public int score;
 	
+	/**
+	 * 本次完成后分数排名比例
+	 */
+	public int scoreTop;
+
+	/**
+	 * 本次完成后完成题目排名比例
+	 */
+	public int doneTop;
+	
+	/**
+	 * 本地练习时长
+	 */
+	public long doneTime;
+	
+	/**
+	 * 本地练习题目
+	 */
+	@Reference
+	public List<UserExercise> userExercise= new ArrayList<UserExercise>();
+	
+	public Date createAt;
+
 }

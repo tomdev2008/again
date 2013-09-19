@@ -21,37 +21,85 @@ import play.modules.morphia.Model;
 @Entity
 public class Subject extends Model{
 
+	/**
+	 * 题目状态
+	 * */
     public SubjectStatus status;
 
+	/**
+	 * 题目类型
+	 * */
     public SubjectType type;
     
+	/**
+	 * 题目所属课程
+	 * */
     @Reference
-    public Tag course;
+    public Course course;
     
+	/**
+	 * 题目来源
+	 * */
     @Reference
-    public Tag grade;
+    public SubjectSource source;
     
+	/**
+	 * 题目知识点
+	 * */
     @Reference
     public Set<Tag> tags = new HashSet();
 
+	/**
+	 * 题目描述
+	 * */
     public String title;
  
+	/**
+	 * 题目选项
+	 * */
     @Reference
     public List<Option> options = new ArrayList();
    
+	/**
+	 * 题目答案
+	 * */
     @Reference
     public List<Option> answer= new ArrayList();
+    
+	/**
+	 * 大题的子题目
+	 * */
+    @Reference
+    public List<Subject> subs ;
 
+	/**
+	 * 题目解答
+	 * */
     public String solution;
     
+	/**
+	 * 题目权重
+	 * */
     public int weight=50;
 
+	/**
+	 * 题目重复频度
+	 * */
     public int frequency = 14;
 
+	/**
+	 * 题目的综合正确率
+	 * */
     public long  ACR=0;
 
+	/**
+	 * 题目一次正确率
+	 * */
     public long FCR =0;
 
+	/**
+	 * 题目二次正确率
+	 * */
     public long SCR =0;
 
     @Reference
