@@ -1,0 +1,189 @@
+<div style="padding:10px;" id="showThemeDetailDialog" class="theme-detail bd ">
+	<div class="pic">
+		<img src="" width="310px" height="550px" />
+		<img src="" width="310px" height="550px" />
+	</div>
+	<div class="info">
+	<h4>基本信息</h4>
+		<ul id="theme-info">
+			<li><span class="k">名称:</span><span class="v"><em id="name"></em></span></li>
+			<li><span class="k">收费方式:</span><span class="v"><em id="payType"></em></span></li>
+			<li><span class="k">下载</span><span class="v"><em  id="downloadCount" class="donwload-num"></em><em></em></span></li>
+			<li><span class="k">大小:</span><span class="v"><b id="size"></b></span></li>
+			<li><span class="k">作者:</span><span id="author" class="v font-size-limit" data-size="8" data-width="210"></span></li>
+			<li id="limitFree-li"></li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+$("#showThemeDetailDialog").dialog({
+    title: "详情",
+    width: 1000,  
+    height: 651,  
+    closed: true,  
+    cache: false,  
+    modal: true
+});
+function showDetail(detailUrl, themeId, gridId, index, grid2) {
+	$.get(detailUrl + "?id="+themeId, function(theme) {
+		var arr = [];
+		if (theme.name) {
+			$("#name").html(theme.name);
+		}
+		if (theme.previews) {
+			for (var i=0;i<theme.previews.length;i++) {
+				arr.push('<img src="'+func_cdnproxy({url:encodeURIComponent(theme.previews[i])})+'" width="310px" height="550px" />');
+			}
+			if (theme.info) {
+				if (theme.info.client) {
+					if (theme.info.client.com$DOT$qihoo360$DOT$launcher) {
+						if (theme.info.client.com$DOT$qihoo360$DOT$launcher.previews) {
+							for (var i=0;i<theme.info.client.com$DOT$qihoo360$DOT$launcher.previews.length;i++) {
+								arr.push('<img src="'+func_cdnproxy({url:encodeURIComponent(theme.info.client.com$DOT$qihoo360$DOT$launcher.previews[i])})+'" width="310px" height="550px" />');
+							}
+						}
+					}
+					if (theme.info.client.com$DOT$qihoo360$DOT$ilauncher) {
+						if (theme.info.client.com$DOT$qihoo360$DOT$ilauncher.previews) {
+							for (var i=0;i<theme.info.client.com$DOT$qihoo360$DOT$ilauncher.previews.length;i++) {
+								arr.push('<img src="'+func_cdnproxy({url:encodeURIComponent(theme.info.client.com$DOT$qihoo360$DOT$ilauncher.previews[i])})+'" width="310px" height="550px" />');
+							}
+						}
+					}
+				}
+			}
+			$(".pic").html(arr.join(''));
+			if (theme.info.updateType == "update") {
+				$.get("@{ajax.Themes.getPreCodeTheme}?id=" + theme._id, function(data) {
+					var arr2 = [];
+					if (data.previews) {
+						for (var i=0;i<data.previews.length;i++) {
+							arr2.push('<img src="'+func_cdnproxy({url:encodeURIComponent(data.previews[i])})+'" width="310px" height="550px" />');
+						}
+						if (data.info) {
+							if (data.info.client) {
+								if (data.info.client.com$DOT$qihoo360$DOT$launcher) {
+									if (data.info.client.com$DOT$qihoo360$DOT$launcher.previews) {
+										for (var i=0;i<data.info.client.com$DOT$qihoo360$DOT$launcher.previews.length;i++) {
+											arr2.push('<img src="'+func_cdnproxy({url:encodeURIComponent(data.info.client.com$DOT$qihoo360$DOT$launcher.previews[i])})+'" width="310px" height="550px" />');
+										}
+									}
+								}
+								if (data.info.client.com$DOT$qihoo360$DOT$ilauncher) {
+									if (data.info.client.com$DOT$qihoo360$DOT$ilauncher.previews) {
+										for (var i=0;i<data.info.client.com$DOT$qihoo360$DOT$ilauncher.previews.length;i++) {
+											arr2.push('<img src="'+func_cdnproxy({url:encodeURIComponent(data.info.client.com$DOT$qihoo360$DOT$ilauncher.previews[i])})+'" width="310px" height="550px" />');
+										}
+									}
+								}
+							}
+						}
+					}
+					$(".pic").append("<div style='font-size:18px;height:50px;line-height:50px;'>上一版本预览图如下：</div>")
+					$(".pic").append(arr2.join(''));
+				})
+			}
+		} else {
+			if (theme.pkgForTerminals) {
+				if (theme.pkgForTerminals[0] == "${tools.Constant.PKG_SCREENLOCKER}") {
+					$(".pic").html('<img src="'+func_cdnproxy({url:encodeURIComponent(theme.file)})+'" width="310px" height="550px" />');
+				} else {
+					if (theme.file) {
+						$(".pic").html('<img src="'+func_cdnproxy({url:encodeURIComponent(theme.file)})+'" width="660px" height="550px" />');	
+					}
+				}
+			} else {
+				if (theme.file) {
+					$(".pic").html('<img src="'+func_cdnproxy({url:encodeURIComponent(theme.file)})+'" width="660px" height="550px" />');	
+				}
+			}
+			
+		}
+		if (theme.payType == "CHARGE") {
+			$("#payType").html(theme.price + "元");
+		} else {
+			$("#payType").html("免费");
+		}
+		$("#downloadCount").html(theme.downloadCount);
+		$("#size").html((theme.size/1024).toFixed(2) + "K");
+		$("#author").html(theme.author);
+		if (theme.desc) {
+			$("#desc-li").remove();
+			$("#theme-info").append('<li id="desc-li"><span class="k">主题描述:</span><span class="v"><em id="themeDesc">'+theme.desc+'</em></span></li>');
+		} else {
+			$("#desc-li").remove();
+		}
+		if (theme.categories && theme.categories.length > 0) {
+			$("#category-li").remove();
+			var names = [];
+			for (var k=0;k<theme.categories.length;k++) {
+				names.push(theme.categories[k].name);
+			}
+			$("#theme-info").append('<li id="category-li"><span class="k">分类:</span><span id="category" class="v">'+names.join(",")+'</span></li>');
+		} else {
+			$("#category-li").remove();
+		}
+		$("#limitFree-li").html('');
+		if (theme.pkgForTerminals && theme.pkgForTerminals.length > 0) {
+			var limitFreeFlag = false;
+			for (var k=0;k<theme.pkgForTerminals.length;k++) {
+				if (theme.pkgForTerminals[k] == "${tools.Constant.PKG_LAUNCHER_2}" || theme.pkgForTerminals[k] == "${tools.Constant.PKG_ILAUNCHER_2}") {
+					limitFreeFlag = true;
+				}
+			}
+			if (limitFreeFlag) {
+				if (theme.discountStart && theme.discountEnd) {
+					$.get("@{ajax.DbThemes.isLimitFree}?id=" + theme._id, function(data) {
+						if (data && data.result) {
+							if (data.result > 0) {
+								$("#limitFree-li").html('<span class="k">是否限免:</span><span id="category" class="v"><em>限免</em></span>');
+							}
+						}
+					})
+				}
+			}
+		}
+		$("#download").remove();
+		$(".upload2cdn").remove();
+		$("#theme-info").append('<a class="button" id="download" style="margin-top:20px;" href="'+func_cdnproxy({url:encodeURIComponent(theme.file)})+'">文件下载</a>');
+		$("#theme-info").append('<a class="button upload2cdn" style="margin-top:20px;" href="javascript:;" onclick="uploadToCDN()">上传到CDN</a>');
+		$("#theme-info").append('<a class="button upload2cdn" style="margin-top:20px;" href="javascript:;" onclick="genCrops()">生成缩略图</a>');
+        $("#theme-info").attr('url', theme.file).attr("tid", theme._id);
+		$(".button").linkbutton();
+	});
+	$("#showThemeDetailDialog").dialog({
+		top:$(window).scrollTop() + 30,
+		closed: false,
+		buttons:[{
+	        text:'关闭',  
+	        handler:function(){
+	        	$('#showThemeDetailDialog').dialog("close");
+	        	gridUtils.unSelectRow(gridId,index);
+	        	if (grid2) {
+	        		gridUtils.unSelectRow(grid2,index);	
+	        	}
+	        }
+	    }],
+	    onClose:function() {
+	    	gridUtils.unSelectRow(gridId,index);
+	    	if (grid2) {
+        		gridUtils.unSelectRow(grid2,index);	
+        	}
+	    }
+	});
+}
+
+function uploadToCDN() {
+    var url = $("#theme-info").attr('url');
+    $.post("/cdn/upload", {url:url}, function(data) {
+        alert(data);
+    })
+}
+
+function genCrops() {
+    var tid = $("#theme-info").attr('tid');
+    $.post("/cdn/crops", {tid:tid}, function(data) {
+        alert(data);
+    })
+}
+</script>

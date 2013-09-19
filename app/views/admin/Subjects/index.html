@@ -1,0 +1,100 @@
+#{extends 'admin/main.html' /}
+#{set title:'list exercise' /}
+<div class="mid">
+#{include '/admin/common/search.html' /}
+	<table id="SubjectList"></table>
+</div>
+<script type="text/javascript">
+$(function() {
+	$("#SubjectList").datagrid(gridUtils.createGridOption({
+		title:"题目管理",
+		url : "@{admin.Subjects.list}",
+		nowrap:false,
+		columns : [[
+				{field:'_id',hidden:true},
+				{field:'checkbox',checkbox:true},
+				{field:'title',title:'题目',width:220,sortable:true,formatter:function(value,rec){
+					var temp = value;
+					var id= rec._id
+					var url = "<a href=\"/admin.Subjects/detail?id="+id+"\">"+temp+"</a>";
+					return url;
+					
+				}},
+				{field:'type',title:'类型',width:20,sortable:true},
+				{field:'tags',title:'tags',width:20,sortable:true,formatter:function(value,rec){
+					var temp="";
+					for (var i=0,len=rec.tags.length; i<len; i++)
+					{
+						var  item = rec.tags[i];
+						var tn= item.name;
+						var pre = item.context;
+						while(pre != null){
+							temp=pre.name+":"+tn;
+							pre = pre.context;
+						}
+							
+						temp = temp+","+tn;
+					}
+					
+					return temp;
+				}},
+				{field:'status',title:'状态',width:20,sortable:true,formatter:function(value){
+					var temp = value;
+					
+					return temp;
+				}},
+				{field:'createAt',title:'上传时间',width:40,sortable:true,formatter:function(value){
+					var temp = new Date(value);
+					return temp.format("yyyy-MM-dd");
+				}},
+				
+		        ]],toolbar:[{
+					text:'添加新题目',
+					iconCls:'icon-add',
+					handler:function(){
+						window.location.href = "@{admin.Subjects.add}";
+					}
+				},{
+					text:'修改题目',
+					iconCls:'icon-edit',
+					handler:function(){
+						var _id = gridUtils.getIdFromGrid("SubjectList");
+						if (!_id) {
+							return;
+						}
+						window.location.href = "@{admin.Subjects.update}?id=" + _id;
+					}
+				},{
+					text:'删除题目',
+					iconCls:'icon-no',
+					handler:function(){
+						var ids = gridUtils.getIdsFromGrid("SubjectList");
+						if (!ids) {
+							return;
+						}
+						if (confirm("确定删除所选中的主题么？")) {
+							$.ajax({
+								url:"@{admin.Subjects.delete}",
+								type: "POST",
+								data:{
+									ids:ids
+								},
+								dataType:"JSON",
+								success:function(data) {
+									if (data.error) {
+										alert(data.error);
+										return;
+									}
+									if (data.warning) {
+										alert(data.warning);
+									}
+									$("#SubjectList").datagrid("reload");
+								}
+							})
+						}
+					}
+				}]
+		})
+	)
+})
+</script>

@@ -1,0 +1,69 @@
+#{extends 'admin/main.html' /}
+<style>
+#main {
+	width: 850px;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+.title {
+	font-size: 18px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+.line {
+	margin-top:20px;
+	margin-bottom:20px;
+	overflow:hidden;
+}
+.left {
+	float: left;
+	width: 100px;
+	font-size:15px;
+}
+
+.right {
+	float: left;
+	width: 750px;
+}
+.desc{
+	width:380px;
+	height:160px;
+}
+input[type=text] {
+	height:30px;
+	width:250px;
+	padding-left:10px;
+}
+.say {
+	float:left;
+	margin-left:200px;
+	color:RGB(150,150,150);
+}
+}
+</style>
+
+<div id="main">
+<form id="submitForm" action="@{admin.Tags.create}" method="post" >
+<input type="hidden" name="subjectType" value="SINGLE">
+	<div class="title">新增Tag</div>
+	<div class="line">
+		<div class="left">tagName:</div>
+		<div class="right">
+			<input type="text" name="tagName" >
+		</div>
+	</div>
+	<div class="line">
+		<div class="left">是否为重点知识点:</div>
+		<div class="right">
+			<input type="checkbox" name="isImportant" >
+		</div>
+	</div>
+	<div class="line">
+		<div class="right" align=right>
+			<input type="submit" id="submitButton" value="保存"/>
+			<input type="button" value="重置"/>
+		</div>
+	</div>
+</form>
+</div>
