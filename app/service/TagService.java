@@ -8,7 +8,6 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
-import controllers.admin.Secure;
 import models.Tag;
 import models.User;
 import play.modules.morphia.Model.MorphiaQuery;
