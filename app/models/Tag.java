@@ -31,6 +31,10 @@ public class Tag extends Model{
 	}
 	
 	
+	public Tag() {
+	}
+
+
 	public String getFullTagName(){
 		String tName = this.name;
 		Tag tag = this.context;

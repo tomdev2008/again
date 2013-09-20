@@ -1,6 +1,14 @@
 #{extends 'admin/main.html' /}
 #{set title:"知识点管理" /}
-<div class="mid"  style="width:400px;">
+<div class="mid"  style="width:600px;border:1px #000000 solid;">
+<h1>批量上传知识点：请上传excel文件</h1>
+<br>
+<form action="@{admin.KnowlegeTags.excel}" enctype="multipart/form-data" method="post" >
+<input type="file" name="resource"/>
+<input type="submit" name="提交" value="上传">
+</form>
+</div>
+<div class="mid"  style="width:400px">
 	<div class="oper">
 		<a class="addTag" href="javascript:void(0)">新增知识点</a>
 		<a class="updateTag" href="javascript:void(0)">修改知识点</a>

@@ -1,13 +1,24 @@
 package controllers.admin;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+
 import org.apache.commons.lang.StringUtils;
 
 import play.mvc.Controller;
-
+import models.Course;
+import models.Option;
+import models.Subject;
 import models.Tag;
 import service.TagService;
 import utils.EasyMap;
@@ -105,5 +116,63 @@ public class KnowlegeTags extends Controller {
 		tag.index = index;
 		tag.save();
 		renderJSON(new EasyMap("success", "更新成功"));
+	}
+
+	public static void excel(File resource) throws BiffException, IOException{
+		
+	    Workbook rwb = null;
+	    Cell cell = null;
+	    
+	    //创建输入流
+	    InputStream stream = new FileInputStream(resource);
+	    
+	    //获取Excel文件对象
+	    rwb = Workbook.getWorkbook(stream);
+	    
+	    //获取文件的指定工作表 默认的第3个
+	    Sheet sheet = rwb.getSheet(0);  
+	   
+	    //行数(表头的目录不需要，从1开始)
+	    for(int i=1; i<sheet.getRows(); i++){
+	    
+	     //创建一个数组 用来存储每一列的值 
+	     //列数
+	     if(sheet.getColumns() >0){
+		      //题目
+	    	 cell = sheet.getCell(0,i);   
+	    	 if(StringUtils.isBlank(cell.getContents())){
+	    		 break;
+	    	 }
+	    	 String courseName = StringUtils.trim(cell.getContents());
+	    	 Course course = Course.filter("name",courseName ).first();
+	    	 if(course == null){
+	    		 course = new Course(courseName,null);
+	    		 course.save();
+	    	 }
+		      //知识点
+		     Tag parent= null;
+		     for(int j=1;j<sheet.getColumns();j++){
+		    	 cell = sheet.getCell(j,i);    
+			     String tagName = StringUtils.trim(cell.getContents());
+			     Tag tag = Tag.filter("name", tagName).first();
+			     if(tag == null){
+			    	 tag = new Tag();
+			    	 tag.course =course;
+			    	 tag.name=tagName;
+			    	 tag.context = parent;
+			    	 int cnt =0;
+			    	 if(parent == null){
+			    		 cnt =(int)Tag.filter("context exists", false).count();
+			    	 }else{
+			    		 cnt = (int)Tag.filter("context", parent).count();
+			    	 }
+			    	 tag.index =cnt;
+			    	 tag.save();
+			     }
+			     parent = tag;
+		     }  
+	     }
+	    }
+	    index();
 	}
 }
