@@ -21,10 +21,8 @@ public class KnowlegeTags extends Controller {
 	}
 	
 	public static void tree(){
-		List<Tag> roots = Tag.filter("context exists", false).filter("name", "Math").order("index").asList();
+		List<Tag> roots = Tag.filter("context exists", false).order("index").asList();
 		List<Map> result = new ArrayList();
-		TagService.createTree(roots, result);
-		roots = Tag.filter("context exists", false).filter("name", "English").order("index").asList();
 		TagService.createTree(roots, result);
 		renderJSON(result);
 	}

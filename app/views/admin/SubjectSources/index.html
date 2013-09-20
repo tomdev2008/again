@@ -1,10 +1,10 @@
 #{extends 'admin/main.html' /}
-#{set title:"课程点管理" /}
+#{set title:"来源管理" /}
 <div class="mid"  style="width:400px;">
 	<div class="oper">
-		<a class="addTag" href="javascript:void(0)">新增课程</a>
-		<a class="updateTag" href="javascript:void(0)">修改课程</a>
-		<a class="deleteTag" href="javascript:void(0)">删除课程</a>
+		<a class="addTag" href="javascript:void(0)">新增题目来源</a>
+		<a class="updateTag" href="javascript:void(0)">修改题目来源</a>
+		<a class="deleteTag" href="javascript:void(0)">删除题目来源</a>
 	</div></br>
 	<ul id="TagTree"></ul>
 </div>
@@ -12,12 +12,12 @@
 	<div class="dialog-wapper">
 	<form id="addTagForm">
 		<ul>
-		<li>课程点名称：</li>
+		<li>来源名称：</li>
 		<li><input type="text" name="name" id="addName"></li>
-		<li>课程点&nbsp;index：</li>
+		<li>来源&nbsp;index：</li>
 		<li><input type="text" name="index" id="addIndex"></li>
-		<li>所属父课程点：</li>
-		<li id="showParent">请选择要添加的父课程</li>
+		<li>所属父来源：</li>
+		<li id="showParent">请选择要添加的父来源</li>
 		</ul>
 		<input type="hidden" id="addParentTagId" name=contextTagId />
 	</form>
@@ -27,7 +27,7 @@
 	<div class="dialog-wapper">
 	<form id="updateTagForm">
 		<ul>
-		<li>课程点名称：</li>
+		<li>来源名称：</li>
 		<li><input type="text" name="name" id="updateTagName"></li>
 		<li>顺序：</li>
 		<li><input type="text" name="index" id="updateOrder"></li>
@@ -43,7 +43,7 @@ $(function() {
 	});
 	$(".updateTag").linkbutton().click(function() {
 		$.ajax({
-			url:"@{admin.Courses.detail}",
+			url:"@{admin.SubjectSources.detail}",
 			type: "POST",
 			data:{
 				tagId: $("#addParentTagId").val()
@@ -62,9 +62,9 @@ $(function() {
 		})
 	});
 	$(".deleteTag").linkbutton().click(function() {
-		if (confirm("确定要删除此课程点么？")) {
+		if (confirm("确定要删除此来源么？")) {
 			$.ajax({
-				url:"@{admin.Courses.del}",
+				url:"@{admin.SubjectSources.del}",
 				type: "POST",
 				data:{
 					tagId:$("#addParentTagId").val()
@@ -84,7 +84,7 @@ $(function() {
 	});
 	$("#TagTree").tree({
 		animate:true,
-		url:"@{admin.Courses.tree}",
+		url:"@{admin.SubjectSources.tree}",
 		onSelect : function(node) {
 			$("#showParent").html(node.text);
 			$("#tagId").val(node.id);
@@ -93,7 +93,7 @@ $(function() {
 	});
 	$("#selectParent").linkbutton({});
 	$("#addTagDialog").dialog({
-		title:"新增课程点",
+		title:"新增来源",
 		closed:true,
 		modal:true,
 		resizable:false,
@@ -109,7 +109,7 @@ $(function() {
 			handler:function(){
 				var formData=$("#addTagForm").serialize();
 				$.ajax({
-					url:"@{admin.Courses.add}",
+					url:"@{admin.SubjectSources.add}",
 					type: "POST",
 					data:formData,
 					dataType:"JSON",
@@ -133,7 +133,7 @@ $(function() {
 		}]
 	});
 	$("#updateTagDialog").dialog({
-		title:"修改课程点",
+		title:"修改来源",
 		closed:true,
 		modal:true,
 		resizable:false,
@@ -146,7 +146,7 @@ $(function() {
 			handler:function(){
 				var formData=$("#updateTagForm").serialize();
 				$.ajax({
-					url:"@{admin.Courses.update}",
+					url:"@{admin.SubjectSources.update}",
 					type: "POST",
 					data:formData,
 					dataType:"JSON",

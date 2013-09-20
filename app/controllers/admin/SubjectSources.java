@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import models.Course;
+import models.SubjectSource;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -12,7 +12,7 @@ import play.mvc.Controller;
 import service.CommonTreeService;
 import utils.EasyMap;
 
-public class Courses extends Controller {
+public class SubjectSources extends Controller {
 	/**
 	 * 知识点管理.
 	 */
@@ -21,7 +21,7 @@ public class Courses extends Controller {
 	}
 	
 	public static void tree(){
-		List<Course> roots = Course.filter("context exists", false).order("index").asList();
+		List<SubjectSource> roots = SubjectSource.filter("context exists", false).order("index").asList();
 		List<Map> result = new ArrayList();
 		CommonTreeService.createTree(roots, result);
 		renderJSON(result);
@@ -29,66 +29,66 @@ public class Courses extends Controller {
 	
 	/**
 	 * 新增一个菜单.
-	 * @param CourseName 菜单名称
+	 * @param SubjectSourceName 菜单名称
 	 * @param url 菜单指向URL
-	 * @param parentCourseId 父菜单ID
+	 * @param parentSubjectSourceId 父菜单ID
 	 */
 	public static void add(final String name, final String contextTagId,final int index) {
-		List<Course> Courses = Course.filter("name", name).asList();
-		if (Courses.size() > 0) {
-			renderJSON(new EasyMap("error", "该Course名已存在，请重新填写！"));
+		List<SubjectSource> SubjectSources = SubjectSource.filter("name", name).asList();
+		if (SubjectSources.size() > 0) {
+			renderJSON(new EasyMap("error", "该SubjectSource名已存在，请重新填写！"));
 		}
 		if (StringUtils.isBlank(name)) {
-			renderJSON(new EasyMap("error", "请输入Course名！"));
+			renderJSON(new EasyMap("error", "请输入SubjectSource名！"));
 		}
  		
- 		Course context = null;
+ 		SubjectSource context = null;
 		
 	
 		
 		if (StringUtils.isNotBlank(contextTagId)) {
-			Course parent = Course.findById(contextTagId);
+			SubjectSource parent = SubjectSource.findById(contextTagId);
 			if (parent != null) {
 				context = parent;
 			}
 		}
-		Course Course = new Course(name,context);
-		Course.index = index;
-		Course.save();
+		SubjectSource SubjectSource = new SubjectSource(name,context);
+		SubjectSource.index = index;
+		SubjectSource.save();
 		renderJSON(new EasyMap("success", "新增成功"));
 	}
 	/**
 	 * 删除一个菜单及其子菜单.
-	 * @param CourseId 菜单ID
+	 * @param SubjectSourceId 菜单ID
 	 */
 	public static void del(final String tagId) {
 		if (StringUtils.isBlank(tagId)) {
 			renderJSON(new EasyMap("error", "请选择要删除的菜单"));
 		}
-		if (Course.findById(tagId) == null) {
+		if (SubjectSource.findById(tagId) == null) {
 			renderJSON(new EasyMap("error", "请选择要删除的菜单"));
 		}
-		Course course =Course.findById(tagId);
-		CommonTreeService.delTree(course);
+		SubjectSource subjectSource =SubjectSource.findById(tagId);
+		CommonTreeService.delTree(subjectSource);
 		renderJSON(new EasyMap("success", "删除成功"));
 	}
 	/**
 	 * 根据一个菜单ID 返回菜单详情.
-	 * @param CourseId
+	 * @param SubjectSourceId
 	 */
 	public static void detail(final String tagId) {
 		if (StringUtils.isBlank(tagId)) {
 			renderJSON(new EasyMap("error", "请选择要修改的菜单"));
 		}
-		Course course =Course.findById(tagId);
-		if (course == null) {
+		SubjectSource subjectSource =SubjectSource.findById(tagId);
+		if (subjectSource == null) {
 			renderJSON(new EasyMap("error", "请选择要修改的菜单"));
 		}
-		renderJSON(course, new play.modules.morphia.utils.ObjectIdGsonAdapter());
+		renderJSON(subjectSource, new play.modules.morphia.utils.ObjectIdGsonAdapter());
 	}
 	/**
 	 * 修改一个菜单.
-	 * @param CourseId CourseId
+	 * @param SubjectSourceId SubjectSourceId
 	 */
 	public static void update(final String tagId, final String name, final int index) {
 		if (StringUtils.isBlank(tagId)) {
@@ -97,13 +97,13 @@ public class Courses extends Controller {
 		if (StringUtils.isBlank(name)) {
 			renderJSON(new EasyMap("error", "请输入菜单名！"));
 		}
-		Course course =Course.findById(tagId);
-		if (course == null) {
+		SubjectSource subjectSource =SubjectSource.findById(tagId);
+		if (subjectSource == null) {
 			renderJSON(new EasyMap("error", "请选择要更新的菜单"));
 		}
-		course.name = name;
-		course.index = index;
-		course.save();
+		subjectSource.name = name;
+		subjectSource.index = index;
+		subjectSource.save();
 		renderJSON(new EasyMap("success", "更新成功"));
 	}
 }

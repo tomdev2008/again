@@ -10,7 +10,7 @@ import models.SubjectSource;
 import models.Tag;
 import play.mvc.Util;
 
-public abstract class CommonTreeService<T> {
+public  class CommonTreeService<T> {
 
 	/**
 	 * 使用递归算法来生成所需要的Tree.
@@ -76,7 +76,7 @@ public abstract class CommonTreeService<T> {
 				delTree(child);
 			}
 			tag.delete();
-		}else if(t.getClass().getClass().equals(Course.class)){
+		}else if(t.getClass().equals(Course.class)){
 			Course tag = (Course)t;
 			List<Course> children = Course.filter("context", tag).asList();
 			for (Course child:children) {
