@@ -154,6 +154,9 @@ public class KnowlegeTags extends Controller {
 		     for(int j=1;j<sheet.getColumns();j++){
 		    	 cell = sheet.getCell(j,i);    
 			     String tagName = StringUtils.trim(cell.getContents());
+			     if(StringUtils.isBlank(tagName)){
+			    	 break;
+			     }
 			     Tag tag = Tag.filter("name", tagName).first();
 			     if(tag == null){
 			    	 tag = new Tag();
