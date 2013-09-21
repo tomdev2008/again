@@ -34,19 +34,16 @@ public class Subject extends Model{
 	/**
 	 * 题目所属课程
 	 * */
-    @Reference
     public Course course;
     
 	/**
 	 * 题目来源
 	 * */
-    @Reference
     public SubjectSource source;
     
 	/**
 	 * 题目知识点
 	 * */
-    @Reference
     public Set<Tag> tags = new HashSet();
 
 	/**
@@ -69,7 +66,7 @@ public class Subject extends Model{
 	/**
 	 * 大题的子题目
 	 * */
-    @Reference
+
     public List<Subject> subs ;
 
 	/**
