@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<testsuite failures="0" time="0.269" errors="0" skipped="0" tests="3" name="LifeCycleEventHanlderTest">
+  <testcase classname="LifeCycleEventHanlderTest" name="testGlobalEventHandler" time="0.082">
+      </testcase>
+  <testcase classname="LifeCycleEventHanlderTest" name="testModelEventHandler" time="0.179">
+      </testcase>
+  <testcase classname="LifeCycleEventHanlderTest" name="testWatchBy" time="0.008">
+      </testcase>
+</testsuite>
