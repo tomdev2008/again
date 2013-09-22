@@ -2,7 +2,9 @@ package models;
 
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
+
 import play.modules.morphia.Model;
+import tools.SequenceUtils;
 
 /**
  * 统一后台管理菜单模型类.
@@ -10,8 +12,9 @@ import play.modules.morphia.Model;
  * @since 2013-7-14
  */
 @Entity
-public class Menu extends Model {
+public class Menu extends BaseModel {
     private static final long serialVersionUID = 4249887676256386150L;
+
     /**
 	 * 菜单名称.
 	 */

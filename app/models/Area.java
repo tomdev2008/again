@@ -1,5 +1,5 @@
 package models;
 
-public class Area {
+public class Area extends BaseModel{
 
 }

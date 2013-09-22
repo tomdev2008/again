@@ -9,6 +9,7 @@ import models.enums.ExerciseType;
 import com.google.code.morphia.annotations.Reference;
 
 import play.modules.morphia.Model;
+import tools.SequenceUtils;
 
 public class UserExercise extends BaseModel {
 

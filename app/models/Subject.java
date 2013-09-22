@@ -9,6 +9,7 @@ import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
 
 import play.modules.morphia.Model;
+import tools.SequenceUtils;
 
 /**
  * Created with IntelliJ IDEA.

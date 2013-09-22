@@ -5,9 +5,9 @@ import java.util.Date;
 import models.enums.RoleType;
 import models.enums.UserStage;
 import models.enums.UserStatus;
-
 import play.libs.Codec;
 import play.modules.morphia.Model;
+import tools.SequenceUtils;
 
 import com.google.code.morphia.annotations.Entity;
 
@@ -35,6 +35,8 @@ public class User extends BaseModel {
 	public User(String userName, String password) {
 		this.userName = userName;
 		this.password = Codec.hexMD5(password);
+		
+		
 	}	
 	
 	public User(String userName, String password, AdminRole adminRole) {

@@ -2,10 +2,12 @@ package models;
 
 import java.util.Date;
 
+import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
 
 import play.modules.morphia.Model;
 
+@Entity
 public class UserTag extends BaseModel {
 
 

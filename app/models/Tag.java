@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import play.modules.morphia.Model;
+import tools.SequenceUtils;
 
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
 
 @Entity
 public class Tag extends BaseModel{
-
+	
 	@Reference
 	public Tag context;
 	
@@ -32,6 +33,7 @@ public class Tag extends BaseModel{
 	
 	
 	public Tag() {
+		
 	}
 
 
