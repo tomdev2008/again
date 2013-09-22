@@ -42,6 +42,11 @@ public class Subject extends Model{
     public SubjectSource source;
     
 	/**
+	 * 题目从属大知识点
+	 * */
+    public Tag bigTag = new Tag();
+    
+	/**
 	 * 题目知识点
 	 * */
     public Set<Tag> tags = new HashSet();

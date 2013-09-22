@@ -19,9 +19,8 @@ public class UserTag extends Model {
     public Course course;
     
 	/**
-	 * 
+	 * 知识点
 	 * */
-    @Reference
     public Tag tag;
     
     public int score;
