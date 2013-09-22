@@ -8,7 +8,7 @@ import com.google.code.morphia.annotations.Reference;
 import play.modules.morphia.Model;
 
 @Entity
-public class UserSubject extends Model {
+public class UserSubject extends BaseModel {
 	
 	@Reference
 	public Subject subject;

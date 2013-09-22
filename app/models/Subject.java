@@ -19,7 +19,7 @@ import play.modules.morphia.Model;
  */
 
 @Entity
-public class Subject extends Model{
+public class Subject extends BaseModel{
 
 	/**
 	 * 题目状态

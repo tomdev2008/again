@@ -9,7 +9,7 @@ import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
 
 @Entity
-public class Tag extends Model{
+public class Tag extends BaseModel{
 
 	@Reference
 	public Tag context;

@@ -6,7 +6,7 @@ import com.google.code.morphia.annotations.Reference;
 import play.modules.morphia.Model;
 
 @Entity
-public class SubjectSource extends Model{
+public class SubjectSource extends BaseModel{
 	@Reference
 	public SubjectSource context;
 

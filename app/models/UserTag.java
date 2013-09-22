@@ -6,7 +6,7 @@ import com.google.code.morphia.annotations.Reference;
 
 import play.modules.morphia.Model;
 
-public class UserTag extends Model {
+public class UserTag extends BaseModel {
 
 
 	@Reference

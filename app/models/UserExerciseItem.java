@@ -12,7 +12,7 @@ import play.modules.morphia.Model;
 import play.modules.morphia.validation.Unique;
 
 @Entity
-public class UserExerciseItem extends Model {
+public class UserExerciseItem extends BaseModel {
 	   
 
 	@Reference

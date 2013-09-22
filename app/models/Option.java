@@ -8,7 +8,7 @@ import play.modules.morphia.Model;
 
 
 @Entity
-public class Option extends Model {
+public class Option extends BaseModel {
 
 	
 	public String content;

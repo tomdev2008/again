@@ -9,7 +9,7 @@ import com.google.code.morphia.annotations.Reference;
 import play.modules.morphia.Model;
 
 @Entity
-public class Course extends Model{
+public class Course extends BaseModel{
 
 	@Reference
 	public Course context;

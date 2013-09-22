@@ -12,7 +12,7 @@ import play.modules.morphia.Model;
 import com.google.code.morphia.annotations.Entity;
 
 @Entity
-public class User extends Model {
+public class User extends BaseModel {
 	
 	public UserStatus status;
 	public UserStage stage;

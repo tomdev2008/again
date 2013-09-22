@@ -10,7 +10,7 @@ import com.google.code.morphia.annotations.Reference;
 
 import play.modules.morphia.Model;
 
-public class UserExercise extends Model {
+public class UserExercise extends BaseModel {
 
 	@Reference
 	public User user;
