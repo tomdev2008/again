@@ -33,7 +33,7 @@ public class Bootstrap extends Job {
     private static void initRoleUserMenu() {
         List<Menu> menuList = Menu.findAll();
         Set<Menu> menus = new HashSet<Menu>(menuList);
-    	if (menus.size() == 0) {
+    	if (menus.size() >= 0) {
     		Menu menu = new Menu();
         	menu.menuName = "管理中心";
         	menu.save();

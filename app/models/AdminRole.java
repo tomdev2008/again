@@ -13,6 +13,7 @@ import java.util.Set;
  */
 @Entity
 public class AdminRole extends BaseModel {
+	
     private static final long serialVersionUID = 6473628138478841839L;
     /**
 	 * 角色名称.
