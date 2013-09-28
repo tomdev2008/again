@@ -15,6 +15,14 @@ public class Question {
 	
 	public List<String> options = new ArrayList<String>();
 	
+	public String source;
+	
+	public String year;
+	
+	public String area;
+	
+	public String bigTag;
+	
 	public String tags = new String();
 	
 	public List<String> ans = new ArrayList<String>();;

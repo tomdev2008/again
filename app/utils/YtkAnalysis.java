@@ -17,6 +17,7 @@ import jxl.format.Colour;
 import jxl.format.VerticalAlignment;
 import jxl.write.*;
 import jxl.write.biff.RowsExceededException;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -26,12 +27,60 @@ public class YtkAnalysis {
 
 	public static List<Question> qlist = new ArrayList<Question>();
 
+	public static String source;
+	public static String bigTag;
+	public static String year;
+	public static String area;
 	public static void main(String[] args) throws UnsupportedEncodingException {
-		File file = new File("C:\\Users\\jiwei\\Desktop\\ytk\\2013-cailiao.txt");
-		Long filelength = file.length();
+		File files = new File("/Users/wji/Desktop/ytk/");
+		if(files.isDirectory()){
+			File[] dir = files.listFiles();
+			for(File d :dir){
+				if(d.getName().indexOf("DS_Store")>0){
+					continue;
+				}
+				String fileName = d.getName();
+				String[] fn = fileName.split("-");
+				year = fn[0];
+				source = fn[1];
+				area =fn[2];
+					
+				File f = new File(d.getPath()+File.separator+"yanyu.txt");
+				bigTag ="言语理解与表达";
+				if(f.exists()){
+					processTxt(f);
+				}
+				f = new File(d.getPath()+File.separator+"shuliang.txt");
+				bigTag ="数量关系";
+				if(f.exists()){
+					processTxt(f);
+				}
+				f = new File(d.getPath()+File.separator+"panduan.txt");
+				bigTag ="判断推理";
+				if(f.exists()){
+					processTxt(f);
+				}
+				f = new File(d.getPath()+File.separator+"changshi.txt");
+				bigTag ="常识判断";
+				if(f.exists()){
+					processTxt(f);
+				}
+				f = new File(d.getPath()+File.separator+"ziliao.txt");
+				bigTag ="资料分析";
+				if(f.exists()){
+					processTxt(f);
+				}
+				// 导出到excel
+				exportExcel("/Users/wji/Desktop/ytk/"+fileName+".xls",qlist);		
+			}
+		}
+	}
+	
+	public static void processTxt(File f){
+		Long filelength = f.length();
 		byte[] filecontent = new byte[filelength.intValue()];
 		try {
-			FileInputStream in = new FileInputStream(file);
+			FileInputStream in = new FileInputStream(f);
 			in.read(filecontent);
 			in.close();
 		} catch (FileNotFoundException e) {
@@ -39,31 +88,17 @@ public class YtkAnalysis {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String html = "";
+		String html = "";	
 		try {
 			html = new String(filecontent, "utf-8");
 		} catch (UnsupportedEncodingException e) {
 			System.err.println("The OS does not support utf-8");
 			e.printStackTrace();
 		}
-
 		Document doc = Jsoup.parse(html);
-		// Elements navElements
-		// =doc.getElementsByClass("nav-underline").get(0).children();
-
-		// //解析分类导航
-		// for(org.jsoup.nodes.Element el:navElements){
-		// Elements liElements =el.getElementsByTag("li");
-		// for(org.jsoup.nodes.Element li:liElements){
-		// Elements as =li.getElementsByTag("a");
-		// Element a = as.get(0);
-		// System.out.println(a.attr("href"));
-		// }
-		// }
+		source =doc.getElementsByClass("exercise-wrap").get(0).attr("data-sheet-name");
+		processSubject(doc);
 		processMaterialSubject(doc);
-		exportExcel("C:\\Users\\jiwei\\Desktop\\ytk\\test.xls",qlist);
-		// 导出到excel
-
 	}
 
 	public static void processSubject(Document doc) {
@@ -94,8 +129,11 @@ public class YtkAnalysis {
 				}
 				Elements contents = question.getElementsByTag("p");
 				String content = "";
-				for (org.jsoup.nodes.Element con : contents) {
-					content = content + con.text();
+//				for (org.jsoup.nodes.Element con : contents) {
+//					content = content + con.text();
+//				}
+				if(StringUtils.isBlank(content)){
+					content = getTxt(contents,"");	
 				}
 				System.out.println("content=" + content);
 				item.title = content;
@@ -123,6 +161,8 @@ public class YtkAnalysis {
 				item.setTag(getTxt(ktag, ","));
 				System.out.println("solutions=" + getTxt(solutions, ""));
 				item.solution = getTxt(solutions, "");
+				item.source = source;
+				item.bigTag = bigTag;
 				if (big != null) {
 					big.subs.add(item);
 				} else {
@@ -165,6 +205,7 @@ public class YtkAnalysis {
 				Question big = new Question();
 				big.title = getTxt(title, "");
 				big.type ="Material";
+				big.source = source;
 				getQA(el.children(), big);
 				qlist.add(big);
 			}
@@ -206,19 +247,21 @@ public class YtkAnalysis {
 				if(p[i].type.equals("Material")){
 					
 					//题干
-					wsBig.addCell(new Label(0, bigCnt +1, String.valueOf(p[i].id), wcf));
-					wsBig.addCell(new Label(1, bigCnt + 1, p[i].title, wcf));
-					wsBig.addCell(new Label(2, bigCnt + 1, p[i].type, wcf));
+					wsBig.addCell(new Label(0, bigCnt +1, String.valueOf(p[i].source), wcf));
+					wsBig.addCell(new Label(1, bigCnt +1, String.valueOf(p[i].id), wcf));
+					wsBig.addCell(new Label(2, bigCnt + 1, p[i].title, wcf));
+					wsBig.addCell(new Label(3, bigCnt + 1, p[i].type, wcf));
 					bigCnt++;
 					for(Question q:p[i].subs){
-						wsBig.addCell(new Label(0, bigCnt + 1, String.valueOf(q.id), wcf));
-						wsBig.addCell(new Label(1, bigCnt + 1, q.title, wcf));
-						wsBig.addCell(new Label(2, bigCnt + 1, q.type, wcf));
-						wsBig.addCell(new Label(3, bigCnt + 1, q.tags, wcf));
-						wsBig.addCell(new Label(4, bigCnt + 1, q.solution, wcf));
+						wsBig.addCell(new Label(1, bigCnt + 1, String.valueOf(q.id), wcf));
+						wsBig.addCell(new Label(2, bigCnt + 1, q.title, wcf));
+						wsBig.addCell(new Label(3, bigCnt + 1, q.type, wcf));
+						wsBig.addCell(new Label(4, bigCnt + 1, q.bigTag, wcf));
+						wsBig.addCell(new Label(5, bigCnt + 1, q.tags, wcf));
+						wsBig.addCell(new Label(6, bigCnt + 1, q.solution, wcf));
 						for( int j=0;j<q.options.size();j++){
 							String s = q.options.get(j);
-							wsBig.addCell(new Label(5+j, bigCnt + 1, s, wcf));
+							wsBig.addCell(new Label(7+j, bigCnt + 1, s, wcf));
 						}
 						bigCnt++;
 					}
@@ -226,15 +269,16 @@ public class YtkAnalysis {
 						wcf = new WritableCellFormat();
 					
 				}else{
-
-					ws.addCell(new Label(0, i + 1, String.valueOf(p[i].id), wcf));
-					ws.addCell(new Label(1, i + 1, p[i].title, wcf));
-					ws.addCell(new Label(2, i + 1, p[i].type, wcf));
-					ws.addCell(new Label(3, i + 1, p[i].tags, wcf));
-					ws.addCell(new Label(4, i + 1, p[i].solution, wcf));
+					ws.addCell(new Label(0, i +1, String.valueOf(p[i].source), wcf));
+					ws.addCell(new Label(1, i + 1, String.valueOf(p[i].id), wcf));
+					ws.addCell(new Label(2, i + 1, p[i].title, wcf));
+					ws.addCell(new Label(3, i + 1, p[i].type, wcf));
+					ws.addCell(new Label(4, i + 1, p[i].bigTag, wcf));
+					ws.addCell(new Label(5, i + 1, p[i].tags, wcf));
+					ws.addCell(new Label(6, i + 1, p[i].solution, wcf));
 					for( int j=0;j<p[i].options.size();j++){
 						String s = p[i].options.get(j);
-						ws.addCell(new Label(5+j, i + 1, s, wcf));
+						ws.addCell(new Label(7+j, i + 1, s, wcf));
 					}
 					
 					if (i == 0)

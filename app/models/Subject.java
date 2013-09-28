@@ -10,6 +10,7 @@ import com.google.code.morphia.annotations.Reference;
 
 import play.modules.morphia.Model;
 import tools.SequenceUtils;
+import utils.EasyMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -52,6 +53,9 @@ public class Subject extends BaseModel{
 	 * */
     public Set<Tag> tags = new HashSet();
 
+    public int index;
+    
+    public Map info= new EasyMap();
 	/**
 	 * 题目描述
 	 * */
