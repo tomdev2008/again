@@ -43,6 +43,7 @@ public class Subject extends BaseModel{
 	 * */
     public SubjectSource source;
     
+    
 	/**
 	 * 题目从属大知识点
 	 * */
