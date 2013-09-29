@@ -18,10 +18,15 @@ import jxl.format.VerticalAlignment;
 import jxl.write.*;
 import jxl.write.biff.RowsExceededException;
 
+import org.json.JSONException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import com.qiniu.api.auth.AuthException;
+
+import tools.UploadUtils;
 
 public class YtkAnalysis {
 
@@ -32,7 +37,8 @@ public class YtkAnalysis {
 	public static String year;
 	public static String area;
 	public static void main(String[] args) throws UnsupportedEncodingException {
-		File files = new File("/Users/wji/Desktop/ytk/");
+		///File files = new File("/Users/wji/Desktop/ytk/");
+		File files = new File("C:\\Users\\jiwei\\Desktop\\ytk\\");
 		if(files.isDirectory()){
 			File[] dir = files.listFiles();
 			for(File d :dir){
@@ -71,7 +77,7 @@ public class YtkAnalysis {
 					processTxt(f);
 				}
 				// 导出到excel
-				exportExcel("/Users/wji/Desktop/ytk/"+fileName+".xls",qlist);		
+				exportExcel("C:\\Users\\jiwei\\Desktop\\ytk\\"+fileName+".xls",qlist);		
 			}
 		}
 	}
@@ -157,10 +163,10 @@ public class YtkAnalysis {
 						.get(1).getElementsByClass("overflow").get(0)
 						.getElementsByTag("p");
 
-				System.out.println("ktag=" + getTxt(ktag, ","));
-				item.setTag(getTxt(ktag, ","));
-				System.out.println("solutions=" + getTxt(solutions, ""));
-				item.solution = getTxt(solutions, "");
+				String tagStr =getTxt(ktag, "");
+				item.setTag(tagStr);
+				String solutionsStr=getTxt(solutions, "");
+				item.solution = solutionsStr;
 				item.source = source;
 				item.bigTag = bigTag;
 				if (big != null) {
@@ -180,12 +186,36 @@ public class YtkAnalysis {
 				continue;
 			}
 			if (StringUtils.isBlank(el.text())) {
+				Elements imgs = el.getElementsByTag("img");
+				for(Element img :imgs){
+					String imgUrl = img.attr("src");
+					if(imgUrl.indexOf("http") <0){
+						continue;
+					}
+					try {
+						String picKey = UploadUtils.copyUrl(imgUrl);
+						String newUrl = "http://hizhiti.u.qiniudn.com/"+picKey;
+						img.attr("src",newUrl);
+					} catch (IOException e) {
+						
+						e.printStackTrace();
+					} catch (AuthException e) {
+						
+						e.printStackTrace();
+					} catch (JSONException e) {
+					
+						e.printStackTrace();
+					}
+				}
+				
 				tmp = el.html();
+
 			} else {
 				tmp = el.text();
 			}
 			txt = txt + tmp + split;
 		}
+		System.out.println(txt);
 		if (StringUtils.isBlank(split)) {
 			return txt;
 		} else {
@@ -201,7 +231,6 @@ public class YtkAnalysis {
 			if (el.hasClass("material-wrap")) {
 				Elements title = el.getElementsByClass("material-content")
 						.get(0).getElementsByTag("p");
-				System.out.println(getTxt(title, ""));
 				Question big = new Question();
 				big.title = getTxt(title, "");
 				big.type ="Material";
@@ -243,6 +272,10 @@ public class YtkAnalysis {
 			Question[] p = new Question[content.size()];
 			int bigCnt = 0;
 			for (int i = 0; i < content.size(); i++) {
+				System.out.println("=="+i);
+				if(i==85){
+					System.out.println("==");
+				}
 				p[i] = (Question) content.get(i);
 				if(p[i].type.equals("Material")){
 					

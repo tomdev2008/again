@@ -34,17 +34,23 @@ public class Question {
 	public void setType(String typeSrt){
 		if("(单选题)".equals(typeSrt)){
 			this.type ="SINGLE";
-		}else if("(多选题)".equals(typeSrt)){
+		}else{
 			this.type ="MUTI";
 		}
+//		else if("(多选题)".equals(typeSrt)){
+//			this.type ="MUTI";
+//		}
 	}
 	
 	public void setSubType(String typeSrt){
 		if("(单选题)".equals(typeSrt)){
 			type ="SubS";
-		}else if("(多选题)".equals(typeSrt)){
+		}else{
 			type ="SubM";
 		}
+//		else if("(多选题)".equals(typeSrt)){
+//			type ="SubM";
+//		}
 	}
 	
 	public void setMType(){
