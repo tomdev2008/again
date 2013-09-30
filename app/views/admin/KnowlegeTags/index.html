@@ -37,6 +37,8 @@
 		<ul>
 		<li>知识点名称：</li>
 		<li><input type="text" name="name" id="updateTagName"></li>
+		<li>所属课程：</li>
+        <li><input type="text" name="course" id="UpdateTagcourse"></li>
 		<li>顺序：</li>
 		<li><input type="text" name="index" id="updateOrder"></li>
 		</ul>
@@ -64,7 +66,7 @@ $(function() {
 				}
 				$("#updateTagName").val(data.name);
 				$("#updateOrder").val(data.index);
-				
+				$("UpdateTagcourse").val(data.course.name);
 				$("#updateTagDialog").dialog("open");
 			}
 		})

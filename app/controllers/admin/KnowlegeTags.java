@@ -44,7 +44,7 @@ public class KnowlegeTags extends Controller {
 	 * @param url 菜单指向URL
 	 * @param parenttagId 父菜单ID
 	 */
-	public static void add(final String name, final String contextTagId,final int index) {
+	public static void add(final String name,final String course, final String contextTagId,final int index) {
 		List<Tag> Tags = Tag.filter("name", name).asList();
 		if (Tags.size() > 0) {
 			renderJSON(new EasyMap("error", "该tag名已存在，请重新填写！"));
@@ -63,8 +63,10 @@ public class KnowlegeTags extends Controller {
 				context = parent;
 			}
 		}
+		Course c = Course.filter("name", course).first();
 		Tag tag = new Tag(name,context);
 		tag.index = index;
+		tag.course = c;
 		tag.save();
 		renderJSON(new EasyMap("success", "新增成功"));
 	}
@@ -101,7 +103,7 @@ public class KnowlegeTags extends Controller {
 	 * 修改一个菜单.
 	 * @param tagId tagId
 	 */
-	public static void update(final String tagId, final String name, final int index) {
+	public static void update(final String tagId,final String course,final String name, final int index) {
 		if (StringUtils.isBlank(tagId)) {
 			renderJSON(new EasyMap("error", "请选择要更新的菜单"));
 		}
@@ -112,6 +114,9 @@ public class KnowlegeTags extends Controller {
 		if (tag == null) {
 			renderJSON(new EasyMap("error", "请选择要更新的菜单"));
 		}
+		Course c = Course.filter("name", course).first();
+		
+		tag.course = c;
 		tag.name = name;
 		tag.index = index;
 		tag.save();
@@ -173,7 +178,7 @@ public class KnowlegeTags extends Controller {
 			    	 tag.save();
 			     }
 			     parent = tag;
-		     }  
+		     }
 	     }
 	    }
 	    index();

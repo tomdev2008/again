@@ -202,8 +202,10 @@ public class Subjects extends  Controller{
 	     //创建一个数组 用来存储每一列的值 
 	     //列数
 	     if(sheet.getColumns() >0){
-		      //题目
-	    	
+		     //题目试卷名字
+	    	 
+	    	 
+	    	 //题目
 	    	 cell = sheet.getCell(0,i);   
 	    	 if(StringUtils.isBlank(cell.getContents())){
 	    		 break;
