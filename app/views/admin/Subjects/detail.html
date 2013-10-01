@@ -49,7 +49,7 @@ input[type=text] {
 	<div class="line">
 		<div class="left">题目:</div>
 		<div class="right">
-			${item.title}
+			${item.title.raw()}
 		</div>
 	</div>
 	
@@ -66,13 +66,116 @@ input[type=text] {
 		</div>
 	</div>
 	<div class="line">
+		<div class="left">序号:</div>
+		<div class="right">
+			${item.index}
+		</div>
+	</div>
+	<div class="line">
 		<div class="left">course:</div>
 		<div class="right">
         		<li>${item.course?.name}</li>
         </div>
 	</div>
 
+ #{if item.type == models.enums.SubjectType.MATERIAL}
+ 	#{list items:item.subs, as :'sub'}
+ 		
 	<div class="line">
+		<div class="left" style="color:red">题目${sub_index}:</div>
+		<div class="right">
+			${sub.title}
+		</div>
+	</div>
+	
+	<div class="line">
+		<div class="left">题目类型:</div>
+		<div class="right">
+			${sub.type}
+		</div>
+	</div>
+	<div class="line">
+		<div class="left">状态:</div>
+		<div class="right">
+			${sub.status}
+		</div>
+	</div>
+	
+ 	<div class="line">
+		<div class="left">序号:</div>
+		<div class="right">
+			${sub.index}
+		</div>
+	</div>
+	<div class="line">
+		<div class="left">大Tag:</div>
+		<div class="right">
+			<li>${sub.bigTag.getFullTagName()}</li>
+		</div>
+	</div>
+ 		<div class="line">
+		<div class="left">Tag:</div>
+		<div class="right">
+			#{list items:sub.tags, as:'tag' }
+        		<li>${tag.getFullTagName()}</li>
+    		#{/list}
+		</div>
+	</div>
+
+	#{list items:sub.options, as:'option' }
+        <div class="line">
+			<div class="left">选项:</div>
+			<div class="right">
+				${option.content.raw()}
+			</div>
+		</div>
+    #{/list}
+    
+	<div class="line">
+		<div class="left">解答:</div>
+		<div class="right">
+			${sub.solution.raw()}
+		</div>
+	</div>
+	<div class="line">
+		<div class="left">frequency:</div>
+		<div class="right">
+			${sub.frequency}
+		</div>
+	</div>
+	
+		<div class="line">
+		<div class="left">accuracyAll:</div>
+		<div class="right">
+			${sub.ACR}
+		</div>
+	</div>
+	
+		<div class="line">
+		<div class="left">accuracyOnce:</div>
+		<div class="right">
+			${sub.FCR}
+		</div>
+	</div>
+	
+	<div class="line">
+		<div class="left">accuracyTwice:</div>
+		<div class="right">
+			${sub.SCR}
+		</div>
+	</div>
+	
+ 	#{/list}
+ 	
+ #{/if}
+ #{else}
+ 	<div class="line">
+		<div class="left">大Tag:</div>
+		<div class="right">
+			<li>${item.bigTag.getFullTagName()}</li>
+		</div>
+	</div>
+ <div class="line">
 		<div class="left">Tag:</div>
 		<div class="right">
 			#{list items:item.tags, as:'tag' }
@@ -85,11 +188,17 @@ input[type=text] {
         <div class="line">
 			<div class="left">选项:</div>
 			<div class="right">
-				${option.content}
+				${option.content.raw()}
 			</div>
 		</div>
     #{/list}
     
+	<div class="line">
+		<div class="left">解答:</div>
+		<div class="right">
+			${item.solution.raw()}
+		</div>
+	</div>
 	<div class="line">
 		<div class="left">frequency:</div>
 		<div class="right">
@@ -118,5 +227,7 @@ input[type=text] {
 		</div>
 	</div>
 	
-</form>
+ #{/else}
+	
+
 </div>

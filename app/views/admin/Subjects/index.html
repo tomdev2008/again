@@ -13,15 +13,22 @@ $(function() {
 		columns : [[
 				{field:'id',hidden:true},
 				{field:'checkbox',checkbox:true},
-				{field:'title',title:'题目',width:220,sortable:true,formatter:function(value,rec){
+				{field:'title',title:'题目',width:220,formatter:function(value,rec){
 					var temp = value;
 					var id= rec.id
 					var url = "<a href=\"/admin.Subjects/detail?id="+id+"\">"+temp+"</a>";
 					return url;
 					
 				}},
-				{field:'type',title:'类型',width:20,sortable:true},
-				{field:'tags',title:'tags',width:20,sortable:true,formatter:function(value,rec){
+				{field:'source',title:'来源',width:20,formatter:function(value){
+					return value.name;
+				}},
+				{field:'index',title:'题目编号',width:20},
+				{field:'type',title:'类型',width:20},
+				{field:'bigTag',title:'bigTag',width:20,formatter:function(value){
+					return value.name;
+				}},
+				{field:'tags',title:'tags',width:20,formatter:function(value,rec){
 					var temp="";
 					for (var i=0,len=rec.tags.length; i<len; i++)
 					{
@@ -38,12 +45,12 @@ $(function() {
 					
 					return temp;
 				}},
-				{field:'status',title:'状态',width:20,sortable:true,formatter:function(value){
+				{field:'status',title:'状态',width:20,formatter:function(value){
 					var temp = value;
 					
 					return temp;
 				}},
-				{field:'createAt',title:'上传时间',width:40,sortable:true,formatter:function(value){
+				{field:'createAt',title:'上传时间',width:40,formatter:function(value){
 					var temp = new Date(value);
 					return temp.format("yyyy-MM-dd");
 				}},

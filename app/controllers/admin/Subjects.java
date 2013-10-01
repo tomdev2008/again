@@ -43,8 +43,9 @@ public class Subjects extends  Controller{
 	
 	public static void list(final int page, final int rows, final String order,
 			final String sort, final String keyword) {
-		MorphiaQuery query = Subject.find();
-		Map result = EasyUIDataGridService.getDataGridMap(page, rows, sort, order, query);
+		SubjectType[] type = {SubjectType.SUBS,SubjectType.SUBM};
+		MorphiaQuery query = Subject.filter("type nin", type).order("source,index");
+		Map result = EasyUIDataGridService.getDataGridMap(page, rows, query);
 		renderJSON(result);
     }
 	
@@ -310,10 +311,12 @@ public class Subjects extends  Controller{
 	     }
 	    sheet = rwb.getSheet(1);
 	     //保存材料
+	    Subject big = null;
 	     for(int i=1; i<sheet.getRows(); i++){
 	 	    
 		     //创建一个数组 用来存储每一列的值 
 		     //列数
+	    	 
 		     if(sheet.getColumns() >0){
 		    	 Subject sb = new Subject();
 		    	 sb.source = source;
@@ -329,7 +332,8 @@ public class Subjects extends  Controller{
 			     sb.type = SubjectType.valueOf(cell.getContents().trim());
 		    	 if(SubjectType.valueOf(StringUtils.trim(cell.getContents())).equals(SubjectType.MATERIAL)){
 		    		 sb.index = i;
-		    		 
+		    		 sb.save();
+		    		 big  = sb;
 		    	 }else{
 		    	     //bigTag
 				     cell = sheet.getCell(4,i);  
@@ -362,7 +366,6 @@ public class Subjects extends  Controller{
 				     Option c = new Option();
 				     cell = sheet.getCell(10,i);   
 				     c.content = processOption(cell.getContents());
-				     c.content = cell.getContents();
 				     c.save();
 				     sb.options.add(c);
 				      //选项D	
@@ -379,9 +382,13 @@ public class Subjects extends  Controller{
 				    	 int index = Integer.parseInt(s);
 				    	 sb.answer.add(sb.options.get(index));
 				     }
-	
-		    	 }    
-			     sb.save();
+				     sb.save();
+				     big.bigTag = sb.bigTag;
+				     big.tags.add(tag);
+				     big.subs.add(sb);
+				     big.index = sb.index;
+				     big.save();
+		    	 } 
 		     } 
 	    }
 	    batchAdd();

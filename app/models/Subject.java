@@ -26,7 +26,7 @@ public class Subject extends BaseModel{
 	/**
 	 * 题目状态
 	 * */
-    public SubjectStatus status;
+    public SubjectStatus status = SubjectStatus.VALID;
 
 	/**
 	 * 题目类型
@@ -74,13 +74,13 @@ public class Subject extends BaseModel{
 	 * 题目答案
 	 * */
     @Reference
-    public List<Option> answer= new ArrayList();
+    public List<Option> answer= new ArrayList<Option>();
     
 	/**
 	 * 大题的子题目
 	 * */
 
-    public List<Subject> subs ;
+    public List<Subject> subs= new ArrayList<Subject>() ;
 
 	/**
 	 * 题目解答
