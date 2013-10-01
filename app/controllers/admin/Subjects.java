@@ -192,6 +192,11 @@ public class Subjects extends  Controller{
 		String[] sbs = fn.split("-");
 		String year = sbs[0];
 		Course course = Course.find("name", "公务员行测").first();
+		if(course == null){
+			course = new Course("公务员行测",null);
+			course.save();
+			
+		}
 		SubjectSource source = SubjectSourceService.getSource(sbs[1]);
 		String[] areas = sbs[2].split("_");
 		
