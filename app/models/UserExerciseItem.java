@@ -24,6 +24,5 @@ public class UserExerciseItem extends BaseModel {
 	@Reference
 	public List<Option>  userAnswer;
 
-	public Date createAt = new Date();
 
 }

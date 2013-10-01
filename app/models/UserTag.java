@@ -41,8 +41,5 @@ public class UserTag extends BaseModel {
 	 * */
 	public int CR=0;
 
-	public Date createAt = new Date();
-    
-	public Date updateAt = new Date();
     
 }

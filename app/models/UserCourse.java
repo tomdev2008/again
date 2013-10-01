@@ -48,9 +48,4 @@ public class UserCourse extends BaseModel{
 	 */
 	public long doneTime;
 	
-
-	public Date createAt;
-	
-	
-	public Date UpdateAt;
 }

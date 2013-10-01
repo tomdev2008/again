@@ -59,8 +59,5 @@ public class UserSubject extends BaseModel {
 	 * 下次出现时间
 	 * */
 	public Date nextDate = new Date();
-	
-	public Date createAt = new Date();
-    
-	public Date updateAt = new Date();
+
 }

@@ -17,15 +17,20 @@ import jxl.read.biff.BiffException;
 
 import org.apache.commons.lang.StringUtils;
 
+import models.City;
 import models.Course;
 import models.Option;
+import models.Paper;
 import models.Subject;
+import models.SubjectSource;
 import models.Tag;
 import models.enums.SubjectStatus;
 import models.enums.SubjectType;
 import play.modules.morphia.Model.MorphiaQuery;
 import play.mvc.Controller;
+import service.CityService;
 import service.EasyUIDataGridService;
+import service.SubjectSourceService;
 import service.TagService;
 import service.UserService;
 
@@ -183,7 +188,20 @@ public class Subjects extends  Controller{
 		render();
 	}
 	public static void excel(File resource) throws BiffException, IOException{
-		
+		String fn = resource.getName();
+		String[] sbs = fn.split("-");
+		String year = sbs[0];
+		Course course = Course.find("name", "公务员行测").first();
+		SubjectSource source = SubjectSourceService.getSource(sbs[1]);
+		String[] areas = sbs[2].split("_");
+		Paper paper = new Paper();
+		paper.course = course;
+		paper.source =source;
+		for(String area:areas){
+			paper.cities.add(CityService.getCity(StringUtils.trim(area)));
+		}		
+		paper.year = Integer.parseInt(year);
+		paper.save();
 	    Workbook rwb = null;
 	    Cell cell = null;
 	    
@@ -194,91 +212,190 @@ public class Subjects extends  Controller{
 	    rwb = Workbook.getWorkbook(stream);
 	    
 	    //获取文件的指定工作表 默认的第3个
-	    Sheet sheet = rwb.getSheet(2);  
-	   
+	    Sheet sheet = rwb.getSheet(1);  
+	    Sheet cailiao = rwb.getSheet(1);
 	    //行数(表头的目录不需要，从1开始)
+	    
 	    for(int i=1; i<sheet.getRows(); i++){
 	    
 	     //创建一个数组 用来存储每一列的值 
 	     //列数
 	     if(sheet.getColumns() >0){
-		     //题目试卷名字
-	    	 
-	    	 
-	    	 //题目
+		     //题目试卷名字,即便来源
 	    	 cell = sheet.getCell(0,i);   
-	    	 if(StringUtils.isBlank(cell.getContents())){
+	    	 if(StringUtils.isBlank(cell.getContents().trim())){
 	    		 break;
 	    	 }
 	    	 Subject sb = new Subject();
-		     sb.title = cell.getContents();
+	    	 
+	    	 sb.source = source;
+	    	 //index
+	    	 cell = sheet.getCell(1,i);   
+	    	 sb.index = Integer.parseInt(cell.getContents().trim());
+	    	 //title
+	    	 cell = sheet.getCell(2,i);
+		     sb.title = cell.getContents().trim();
+		     //题目类型
+		     cell = sheet.getCell(3,i);
+		     sb.type = SubjectType.valueOf(cell.getContents().trim());
+		     //bigTag
+		     cell = sheet.getCell(4,i);  
+		     Tag tag =TagService.getTag(cell.getContents().trim());
+		     sb.bigTag = tag;
+		     //tag
+		     cell = sheet.getCell(5,i);  
+		     tag =TagService.getTag(cell.getContents().trim());
+		     sb.tags.add(tag);
+		     
+		     //解析
+		     cell = sheet.getCell(6,i);  
+		     String solu = cell.getContents(); 
+		     sb.solution = solu;
+		     
 		      //选项A
 		     Option a = new Option();
-		     cell = sheet.getCell(1,i);    
-		     a.content = cell.getContents();
+		     cell = sheet.getCell(7,i);    
+		     a.content = processOption(cell.getContents());
 		     a.save();
 		     sb.options.add(a);
 		      //选项B	
 		     Option b = new Option();
-		     cell = sheet.getCell(2,i);    
-		     b.content = cell.getContents();
+		     cell = sheet.getCell(8,i);    
+		     b.content = processOption(cell.getContents());
 		     b.save();
 		     sb.options.add(b);
 		      //选项C	
 		     Option c = new Option();
-		     cell = sheet.getCell(3,i);    
+		     c.content = processOption(cell.getContents());
 		     c.content = cell.getContents();
 		     c.save();
 		     sb.options.add(c);
 		      //选项D	
 		     Option d = new Option();
 		     cell = sheet.getCell(4,i);    
-		     d.content = cell.getContents();
+		     d.content = processOption(cell.getContents());
 		     d.save();
 		     sb.options.add(d);
+		     
 		      //正确选项
 		     cell = sheet.getCell(5,i);  
-		     String anw = cell.getContents(); 
-		     if("a".equalsIgnoreCase(anw)){
-		    	 sb.answer.add(a);
-		     }else  if("b".equalsIgnoreCase(anw)){
-		    	 sb.answer.add(b);
-		     }else  if("c".equalsIgnoreCase(anw)){
-		    	 sb.answer.add(d);
-		     }else  if("d".equalsIgnoreCase(anw)){
-		    	 sb.answer.add(d);
+		     String anw = processAnswer(cell.getContents()); 
+		     String[] as = anw.split(",");
+		     for(String s:as){
+		    	 int index = Integer.parseInt(s);
+		    	 sb.answer.add(sb.options.get(index));
 		     }
+		    
 		     
 		      //解析
-		     cell = sheet.getCell(6,i);  
-		     String solu = cell.getContents(); 
-		     sb.solution = solu;
+		    
 		      //Course
-		     cell = sheet.getCell(7,i);  
-		     String cour = cell.getContents();
-		     Course course =Course.filter("name", cour).first();
-		     sb.course = course;
-		      //Grade
-		     cell = sheet.getCell(8,i);  
-		     String gde = cell.getContents();
-		     Tag grade =TagService.getTag(gde);
-		     
-		      //Orign
-		     cell = sheet.getCell(9,i);  
-		     String ori = cell.getContents();
-		     Tag orign =TagService.getTag(ori);
-		     sb.tags.add(orign);
-		     //Tags
-		     cell = sheet.getCell(10,i);  
-		     String t = cell.getContents();
-		     Tag tag =TagService.getTag(t);
-		     sb.tags.add(tag);
+		     sb.course = course;		     
 		     sb.save();
 		     
+	     	}
 	     }
-	   
-	     
+	     //保存材料
+	     for(int i=1; i<cailiao.getRows(); i++){
+	 	    
+		     //创建一个数组 用来存储每一列的值 
+		     //列数
+		     if(cailiao.getColumns() >0){
+		    	 Subject sb = new Subject();
+		    	 sb.source = source;
+		    	 sb.course = course;	
+		    	 //index
+		    	 cell = sheet.getCell(1,i);   
+		    	 sb.index = Integer.parseInt(cell.getContents().trim());
+		    	//title
+		    	 cell = sheet.getCell(2,i);
+			     sb.title = cell.getContents().trim();
+			     //题目类型
+			     cell = sheet.getCell(3,i);
+			     sb.type = SubjectType.valueOf(cell.getContents().trim());
+		    	 if(SubjectType.valueOf(StringUtils.trim(cell.getContents())).equals(SubjectType.MATERIAL)){
+		    		 sb.index = i;
+		    		 
+		    	 }else{
+		    	     //bigTag
+				     cell = sheet.getCell(4,i);  
+				     Tag tag =TagService.getTag(cell.getContents().trim());
+				     sb.bigTag = tag;
+				     //tag
+				     cell = sheet.getCell(5,i);  
+				     tag =TagService.getTag(cell.getContents().trim());
+				     sb.tags.add(tag);
+				     
+				     //解析
+				     cell = sheet.getCell(6,i);  
+				     String solu = cell.getContents(); 
+				     sb.solution = solu;
+				     
+				      //选项A
+				     Option a = new Option();
+				     cell = sheet.getCell(7,i);    
+				     a.content = processOption(cell.getContents());
+				     a.save();
+				     sb.options.add(a);
+				      //选项B	
+				     Option b = new Option();
+				     cell = sheet.getCell(8,i);    
+				     b.content = processOption(cell.getContents());
+				     b.save();
+				     sb.options.add(b);
+				      //选项C	
+				     Option c = new Option();
+				     c.content = processOption(cell.getContents());
+				     c.content = cell.getContents();
+				     c.save();
+				     sb.options.add(c);
+				      //选项D	
+				     Option d = new Option();
+				     cell = sheet.getCell(4,i);    
+				     d.content = processOption(cell.getContents());
+				     d.save();
+				     sb.options.add(d);
+				     
+				      //正确选项
+				     cell = sheet.getCell(5,i);  
+				     String anw = processAnswer(cell.getContents()); 
+				     String[] as = anw.split(",");
+				     for(String s:as){
+				    	 int index = Integer.parseInt(s);
+				    	 sb.answer.add(sb.options.get(index));
+				     }
+		    	 }    
+			     sb.save();
+		     } 
 	    }
 	    batchAdd();
+	}
+	
+	public static String processOption(String op){
+		op = StringUtils.trim(op);
+		if(op.indexOf("A.") >=0 ||
+				op.indexOf("B.") >=0 ||
+				op.indexOf("C.") >=0 ||
+				op.indexOf("D.") >=0){
+			op = op.substring(2);
+		}
+		return op;
+	}
+	
+	public static String  processAnswer(String an ){
+		String a = "";
+		if(an.indexOf("A") >=0){
+			a =a+"0,";
+		}
+		if(an.indexOf("B") >=0){
+			a =a+"1,";
+		}
+		if(an.indexOf("C") >=0){
+			a =a+"2,";
+		}
+		if(an.indexOf("D") >=0){
+			a =a+"3,";
+		}
+		return a.substring(0,a.length()-1);
 	}
 }

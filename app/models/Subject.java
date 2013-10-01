@@ -54,9 +54,11 @@ public class Subject extends BaseModel{
 	 * */
     public Set<Tag> tags = new HashSet();
 
+    /**
+	 * 所在题库的序号
+	 * */
     public int index;
     
-    public Map info= new EasyMap();
 	/**
 	 * 题目描述
 	 * */
@@ -113,9 +115,6 @@ public class Subject extends BaseModel{
     @Reference
     public User owner;
     
-    public Date createAt = new Date();
-
-    public Date updateAt = new Date();
    
 }
 

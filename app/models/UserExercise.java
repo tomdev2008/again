@@ -69,8 +69,5 @@ public class UserExercise extends BaseModel {
 	 */
 	public List<String> suggestion = new ArrayList<String>();
 	
-	public Date createAt;
-	
-	public Date updateAt;
 
 }

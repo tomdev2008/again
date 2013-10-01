@@ -12,6 +12,4 @@ import tools.SequenceUtils;
 public class Option extends BaseModel {
 
 	public String content;
-	public Date createAt = new Date();
-    public Date updateAt = new Date();
 }
