@@ -45,7 +45,7 @@ public class Subjects extends  Controller{
 			final String sort, final String keyword) {
 		MorphiaQuery query = Subject.find();
 		Map result = EasyUIDataGridService.getDataGridMap(page, rows, sort, order, query);
-		renderJSON(result, new play.modules.morphia.utils.ObjectIdGsonAdapter());
+		renderJSON(result);
     }
 	
 	public static void detail(String id){

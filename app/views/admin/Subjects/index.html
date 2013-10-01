@@ -11,11 +11,11 @@ $(function() {
 		url : "@{admin.Subjects.list}",
 		nowrap:false,
 		columns : [[
-				{field:'_id',hidden:true},
+				{field:'id',hidden:true},
 				{field:'checkbox',checkbox:true},
 				{field:'title',title:'题目',width:220,sortable:true,formatter:function(value,rec){
 					var temp = value;
-					var id= rec._id
+					var id= rec.id
 					var url = "<a href=\"/admin.Subjects/detail?id="+id+"\">"+temp+"</a>";
 					return url;
 					

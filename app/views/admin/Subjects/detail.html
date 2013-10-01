@@ -44,7 +44,6 @@ input[type=text] {
 </style>
 
 <div id="main">
-<form id="submitForm" action="@{admin.Subjects.create}" method="post" >
 <input type="hidden" name="subjectType" value="SINGLE">
 	<div class="title">题目明细</div>
 	<div class="line">
@@ -71,13 +70,6 @@ input[type=text] {
 		<div class="right">
         		<li>${item.course?.name}</li>
         </div>
-	</div>
-	<div class="line">
-		<div class="left">grade:</div>
-		<div class="right">
-        	<li>${item.grade?.name}</li>
-        </div>
-    		
 	</div>
 
 	<div class="line">
