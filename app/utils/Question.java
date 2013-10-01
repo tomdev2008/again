@@ -25,7 +25,7 @@ public class Question {
 	
 	public String tags = new String();
 	
-	public List<String> ans = new ArrayList<String>();;
+	public String ans ;
 	
 	public String  solution;
 	
@@ -44,9 +44,9 @@ public class Question {
 	
 	public void setSubType(String typeSrt){
 		if("(单选题)".equals(typeSrt)){
-			type ="SubS";
+			type ="SUBS";
 		}else{
-			type ="SubM";
+			type ="SUBM";
 		}
 //		else if("(多选题)".equals(typeSrt)){
 //			type ="SubM";

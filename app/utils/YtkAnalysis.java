@@ -37,8 +37,8 @@ public class YtkAnalysis {
 	public static String year;
 	public static String area;
 	public static void main(String[] args) throws UnsupportedEncodingException {
-		///File files = new File("/Users/wji/Desktop/ytk/");
-		File files = new File("C:\\Users\\jiwei\\Desktop\\ytk\\");
+		File files = new File("/Users/wji/Desktop/ytk/");
+		//File files = new File("C:\\Users\\jiwei\\Desktop\\ytk\\");
 		if(files.isDirectory()){
 			File[] dir = files.listFiles();
 			for(File d :dir){
@@ -77,7 +77,9 @@ public class YtkAnalysis {
 					processTxt(f);
 				}
 				// 导出到excel
-				exportExcel("C:\\Users\\jiwei\\Desktop\\ytk\\"+fileName+".xls",qlist);		
+				//files
+				exportExcel("/Users/wji/Desktop/ytk/"+fileName+".xls",qlist);		
+				//exportExcel("C:\\Users\\jiwei\\Desktop\\ytk\\"+fileName+".xls",qlist);		
 			}
 		}
 	}
@@ -152,9 +154,9 @@ public class YtkAnalysis {
 				}
 
 				// anower
-				Element answer = el.getElementsByClass("answer-meta").get(0);
+				Element answer = el.getElementsByClass("correct-answer").get(0);
 				System.out.println("answer=" + answer.text());
-
+				item.ans = answer.text();
 				// solution overflow
 
 				Elements ktag = el.getElementsByClass("solution-item").get(0)
@@ -233,7 +235,7 @@ public class YtkAnalysis {
 						.get(0).getElementsByTag("p");
 				Question big = new Question();
 				big.title = getTxt(title, "");
-				big.type ="Material";
+				big.type ="MATERIAL";
 				big.source = source;
 				getQA(el.children(), big);
 				qlist.add(big);
@@ -257,8 +259,8 @@ public class YtkAnalysis {
 		try {
 			fos = new FileOutputStream(fileName);
 			wwb = Workbook.createWorkbook(fos);
-			WritableSheet ws = wwb.createSheet("单选题列表", 10); // 创建一个工作表
-			WritableSheet wsBig = wwb.createSheet("多选题列表", 10);
+			WritableSheet ws = wwb.createSheet("普通题列表", 10); // 创建一个工作表
+			WritableSheet wsBig = wwb.createSheet("材料题列表", 10);
 			// 设置单元格的文字格式
 			WritableFont wf = new WritableFont(WritableFont.ARIAL, 10,
 					WritableFont.NO_BOLD, false, UnderlineStyle.NO_UNDERLINE,
@@ -277,7 +279,7 @@ public class YtkAnalysis {
 					System.out.println("==");
 				}
 				p[i] = (Question) content.get(i);
-				if(p[i].type.equals("Material")){
+				if(p[i].type.equals("MATERIAL")){
 					
 					//题干
 					wsBig.addCell(new Label(0, bigCnt +1, String.valueOf(p[i].source), wcf));
@@ -291,10 +293,11 @@ public class YtkAnalysis {
 						wsBig.addCell(new Label(3, bigCnt + 1, q.type, wcf));
 						wsBig.addCell(new Label(4, bigCnt + 1, q.bigTag, wcf));
 						wsBig.addCell(new Label(5, bigCnt + 1, q.tags, wcf));
-						wsBig.addCell(new Label(6, bigCnt + 1, q.solution, wcf));
+						wsBig.addCell(new Label(6, bigCnt + 1, q.ans, wcf));
+						wsBig.addCell(new Label(7, bigCnt + 1, q.solution, wcf));
 						for( int j=0;j<q.options.size();j++){
 							String s = q.options.get(j);
-							wsBig.addCell(new Label(7+j, bigCnt + 1, s, wcf));
+							wsBig.addCell(new Label(8+j, bigCnt + 1, s, wcf));
 						}
 						bigCnt++;
 					}
@@ -308,10 +311,11 @@ public class YtkAnalysis {
 					ws.addCell(new Label(3, i + 1, p[i].type, wcf));
 					ws.addCell(new Label(4, i + 1, p[i].bigTag, wcf));
 					ws.addCell(new Label(5, i + 1, p[i].tags, wcf));
-					ws.addCell(new Label(6, i + 1, p[i].solution, wcf));
+					ws.addCell(new Label(6, i + 1, p[i].ans, wcf));
+					ws.addCell(new Label(7, i + 1, p[i].solution, wcf));
 					for( int j=0;j<p[i].options.size();j++){
 						String s = p[i].options.get(j);
-						ws.addCell(new Label(7+j, i + 1, s, wcf));
+						ws.addCell(new Label(8+j, i + 1, s, wcf));
 					}
 					
 					if (i == 0)

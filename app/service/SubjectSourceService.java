@@ -10,6 +10,7 @@ public class SubjectSourceService {
 		SubjectSource source = SubjectSource.find("name", name).first();
 		if(source == null){
 			source = new SubjectSource(name, null);
+			source.save();
 		}
 		return source;
 	}

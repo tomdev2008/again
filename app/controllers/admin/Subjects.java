@@ -194,14 +194,19 @@ public class Subjects extends  Controller{
 		Course course = Course.find("name", "公务员行测").first();
 		SubjectSource source = SubjectSourceService.getSource(sbs[1]);
 		String[] areas = sbs[2].split("_");
-		Paper paper = new Paper();
-		paper.course = course;
-		paper.source =source;
-		for(String area:areas){
-			paper.cities.add(CityService.getCity(StringUtils.trim(area)));
-		}		
-		paper.year = Integer.parseInt(year);
-		paper.save();
+		
+		Paper paper = Paper.filter("source", source).first();
+		if(paper == null){
+			paper = new Paper();
+			paper.course = course;
+			paper.source =source;
+			for(String area:areas){
+				paper.cities.add(CityService.getCity(StringUtils.trim(area)));
+			}		
+			paper.year = Integer.parseInt(year);
+			paper.save();
+		}
+		
 	    Workbook rwb = null;
 	    Cell cell = null;
 	    
@@ -212,8 +217,7 @@ public class Subjects extends  Controller{
 	    rwb = Workbook.getWorkbook(stream);
 	    
 	    //获取文件的指定工作表 默认的第3个
-	    Sheet sheet = rwb.getSheet(1);  
-	    Sheet cailiao = rwb.getSheet(1);
+	    Sheet sheet = rwb.getSheet(0);  
 	    //行数(表头的目录不需要，从1开始)
 	    
 	    for(int i=1; i<sheet.getRows(); i++){
@@ -247,45 +251,49 @@ public class Subjects extends  Controller{
 		     tag =TagService.getTag(cell.getContents().trim());
 		     sb.tags.add(tag);
 		     
+
+	
+		    	 
 		     //解析
-		     cell = sheet.getCell(6,i);  
+		     cell = sheet.getCell(7,i);  
 		     String solu = cell.getContents(); 
 		     sb.solution = solu;
 		     
 		      //选项A
 		     Option a = new Option();
-		     cell = sheet.getCell(7,i);    
+		     cell = sheet.getCell(8,i);    
 		     a.content = processOption(cell.getContents());
 		     a.save();
 		     sb.options.add(a);
 		      //选项B	
 		     Option b = new Option();
-		     cell = sheet.getCell(8,i);    
+		     cell = sheet.getCell(9,i);    
 		     b.content = processOption(cell.getContents());
 		     b.save();
 		     sb.options.add(b);
 		      //选项C	
 		     Option c = new Option();
+		     cell = sheet.getCell(10,i);   
 		     c.content = processOption(cell.getContents());
 		     c.content = cell.getContents();
 		     c.save();
 		     sb.options.add(c);
 		      //选项D	
 		     Option d = new Option();
-		     cell = sheet.getCell(4,i);    
+		     cell = sheet.getCell(11,i);    
 		     d.content = processOption(cell.getContents());
 		     d.save();
 		     sb.options.add(d);
 		     
-		      //正确选项
-		     cell = sheet.getCell(5,i);  
+	     	//正确选项
+		     cell = sheet.getCell(6,i);  
 		     String anw = processAnswer(cell.getContents()); 
 		     String[] as = anw.split(",");
 		     for(String s:as){
 		    	 int index = Integer.parseInt(s);
 		    	 sb.answer.add(sb.options.get(index));
-		     }
-		    
+		    }
+		     
 		     
 		      //解析
 		    
@@ -295,12 +303,13 @@ public class Subjects extends  Controller{
 		     
 	     	}
 	     }
+	    sheet = rwb.getSheet(1);
 	     //保存材料
-	     for(int i=1; i<cailiao.getRows(); i++){
+	     for(int i=1; i<sheet.getRows(); i++){
 	 	    
 		     //创建一个数组 用来存储每一列的值 
 		     //列数
-		     if(cailiao.getColumns() >0){
+		     if(sheet.getColumns() >0){
 		    	 Subject sb = new Subject();
 		    	 sb.source = source;
 		    	 sb.course = course;	
@@ -326,44 +335,46 @@ public class Subjects extends  Controller{
 				     tag =TagService.getTag(cell.getContents().trim());
 				     sb.tags.add(tag);
 				     
+				    
 				     //解析
-				     cell = sheet.getCell(6,i);  
+				     cell = sheet.getCell(7,i);  
 				     String solu = cell.getContents(); 
 				     sb.solution = solu;
 				     
 				      //选项A
 				     Option a = new Option();
-				     cell = sheet.getCell(7,i);    
+				     cell = sheet.getCell(8,i);    
 				     a.content = processOption(cell.getContents());
 				     a.save();
 				     sb.options.add(a);
 				      //选项B	
 				     Option b = new Option();
-				     cell = sheet.getCell(8,i);    
+				     cell = sheet.getCell(9,i);    
 				     b.content = processOption(cell.getContents());
 				     b.save();
 				     sb.options.add(b);
 				      //选项C	
 				     Option c = new Option();
+				     cell = sheet.getCell(10,i);   
 				     c.content = processOption(cell.getContents());
 				     c.content = cell.getContents();
 				     c.save();
 				     sb.options.add(c);
 				      //选项D	
 				     Option d = new Option();
-				     cell = sheet.getCell(4,i);    
+				     cell = sheet.getCell(11,i);    
 				     d.content = processOption(cell.getContents());
 				     d.save();
 				     sb.options.add(d);
-				     
-				      //正确选项
-				     cell = sheet.getCell(5,i);  
+				     //正确选项
+				     cell = sheet.getCell(6,i);  
 				     String anw = processAnswer(cell.getContents()); 
 				     String[] as = anw.split(",");
 				     for(String s:as){
 				    	 int index = Integer.parseInt(s);
 				    	 sb.answer.add(sb.options.get(index));
 				     }
+	
 		    	 }    
 			     sb.save();
 		     } 
