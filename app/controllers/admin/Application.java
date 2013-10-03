@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import jxl.read.biff.BiffException;
 import models.Menu;
 import models.Subject;
 import models.Tag;
@@ -25,6 +26,7 @@ import play.mvc.Controller;
 import play.mvc.With;
 import service.TagService;
 import service.TreeService;
+import utils.YtkImportTools;
 
 /**
  * 后台运营管理系统页面控制器.
@@ -64,9 +66,18 @@ public class Application extends Controller {
 	}
 	
 	
-	public static void initTag() throws IOException{
-		
-	
+	public static void importYTK() throws IOException{
+		File dir =Play.getFile("ytk");
+		if(dir.exists() && dir.isDirectory()){
+			for(File f :dir.listFiles()){
+				try {
+					YtkImportTools.importFile(f);
+				} catch (BiffException e) {
+					System.out.println("file is fail:"+f.getName());
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	
