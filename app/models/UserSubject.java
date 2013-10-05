@@ -11,6 +11,9 @@ import play.modules.morphia.Model;
 public class UserSubject extends BaseModel {
 	
 	@Reference
+	public User user;
+	
+	@Reference
 	public Subject subject;
 	
 	/**剩余重复次数(URT=User should Reapet Time)*/

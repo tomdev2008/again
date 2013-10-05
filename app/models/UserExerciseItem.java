@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +23,9 @@ public class UserExerciseItem extends BaseModel {
 	public Subject subject;
 	
 	@Reference
-	public List<Option>  userAnswer;
+	public List<Option>  userAnswer = new ArrayList<Option>();
+	
+	public int score;
 
 
 }

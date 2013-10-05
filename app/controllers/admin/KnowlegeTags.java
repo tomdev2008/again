@@ -2,6 +2,7 @@ package controllers.admin;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import jxl.read.biff.BiffException;
 import org.apache.commons.lang.StringUtils;
 
 import play.mvc.Controller;
+import play.mvc.Util;
 import models.Course;
 import models.Option;
 import models.Subject;
@@ -125,6 +127,12 @@ public class KnowlegeTags extends Controller {
 
 	public static void excel(File resource) throws BiffException, IOException{
 		
+		importExcel(resource);
+	    index();
+	}
+	
+	@Util
+	public static void importExcel(File resource) throws BiffException, IOException{
 	    Workbook rwb = null;
 	    Cell cell = null;
 	    
@@ -181,6 +189,5 @@ public class KnowlegeTags extends Controller {
 		     }
 	     }
 	    }
-	    index();
 	}
 }

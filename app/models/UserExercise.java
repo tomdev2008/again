@@ -23,16 +23,16 @@ public class UserExercise extends BaseModel {
 	 * */
 	public int status;
 	
+	public String name;
+	
+	
 	/**本次练习类型*/
 	public ExerciseType type;
 	
-	/**当类型是真题或者模拟题时，答题的属性从userpaper 中取*/
+	/**当类型是真题或者模拟题时，根据paper 中的source来获取取题目*/
 	@Reference
-	public UserPaper upaper;
-	
-	/**本次练习名称*/
-	public String name;
-	
+	public Paper paper;
+		
 	/**
 	 * 本次考试得分
 	 */
@@ -57,7 +57,7 @@ public class UserExercise extends BaseModel {
 	 * 本地练习题目
 	 */
 	@Reference
-	public List<UserExercise> userExercise= new ArrayList<UserExercise>();
+	public List<UserExerciseItem> userExerciseItem = new ArrayList<UserExerciseItem>();
 	
 	/**
 	 * 新涉及知识点
