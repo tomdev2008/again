@@ -108,7 +108,7 @@ public class Exercises extends Controller {
 		render(ue);
 	}
 	
-	public static void end(long ueid ,String answer){
+	public static void end(long ueid ,String answer,long time){
 		User user = Users.getLoginUser();
 		String[] an = answer.split(",");
 		int correctCnt=0;
@@ -118,12 +118,14 @@ public class Exercises extends Controller {
 			String[] item = a.split("_");
 			UserSubject  userSubject = UserSubject.findById(item[0]);
 			int cnt =0;
-			UserExerciseItem ueItem = new UserExerciseItem();
+			int index = Integer.parseInt(item[1]);
+			
+			UserExerciseItem ueItem = ue.userExerciseItem.get(index);
 			ueItem.subject = userSubject.subject;
 			ueItem.user = user;
 			
 			for(int i=1;i< item.length;i++){
-				Option  option = Option.findById(item[1]);
+				Option  option = Option.findById(item[2]);
 				ueItem.userAnswer.add(option);
 				
 				for (Option o :ueItem.subject.answer){
@@ -168,11 +170,10 @@ public class Exercises extends Controller {
 //				userSubject.completeCount = userSubject.completeCount +1;
 				userSubject.URT = userSubject.URT -1;
 				correctCnt++;
-				ue.score = 1;
-				
+				ueItem.score = 1;
 			}else{
 				if(ueItem.subject.answer.size() ==0){
-					ue.score = -1;
+					ueItem.score = -1;
 				}else{
 					userSubject.o().inc("mistakeCount, displayCount,completeCount", 1, 1,1).update("_id", userSubject.getId());
 //					userSubject.mistakeCount = userSubject.mistakeCount+1;
@@ -180,10 +181,11 @@ public class Exercises extends Controller {
 //					userSubject.completeCount = userSubject.completeCount +1;
 					userSubject.URT = userSubject.URT -1;
 					mistakeCnt++;
-					ue.score = 0;
+					ueItem.score = 0;
 				}
 			}
-			
+			ueItem.save();
+			ue.userExerciseItem.add(ueItem);
 			//TODO:下次可以展现的时间
 			Date next = new Date(System.currentTimeMillis());
 			next = DateUtils.addMinutes(next, 15);
@@ -191,6 +193,8 @@ public class Exercises extends Controller {
 			userSubject.updateAt = new Date();
 			userSubject.save();
 		}	
+		ue.doneTime = time;
+		ue.score = (correctCnt/ue.userExerciseItem.size())*100;
 		ue.save();
 		//new UserProfileUdateJob(exercises).now();
 		render(ue,correctCnt,mistakeCnt);

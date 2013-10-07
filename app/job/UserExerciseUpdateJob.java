@@ -3,12 +3,10 @@
 //import java.util.Date;
 //import java.util.List;
 //
-//import models.ScheduleInfo;
 //import models.Subject;
 //import models.Tag;
 //import models.User;
 //import models.UserExercise;
-//import models.enums.UserExerciseStatus;
 //import play.jobs.Job;
 //
 //public class UserExerciseUpdateJob extends Job{
