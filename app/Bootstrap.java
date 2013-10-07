@@ -7,6 +7,7 @@ import java.util.Set;
 import jxl.read.biff.BiffException;
 import controllers.admin.KnowlegeTags;
 import models.AdminRole;
+import models.Tag;
 import models.User;
 import models.Menu;
 import play.Logger;
@@ -99,7 +100,10 @@ public class Bootstrap extends Job {
             User superUser = new User("admin", "123456", superRole);
             superUser.save(); 
         }
-        initTag();
+        if(Tag.count() ==0){
+        	initTag();
+        }
+        
     }
     
     public static void initCourse(){
@@ -111,16 +115,10 @@ public class Bootstrap extends Job {
     	try {
 			KnowlegeTags.importExcel(resource);
 		} catch (BiffException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
-    
-    public static void initSource(){
-
     }
     
 }

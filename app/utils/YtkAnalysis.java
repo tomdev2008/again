@@ -37,49 +37,63 @@ public class YtkAnalysis {
 	public static String year;
 	public static String area;
 	public static void main(String[] args) throws UnsupportedEncodingException {
-		File files = new File("/Users/wji/Desktop/ytk/");
+		File files = new File("/Users/wji/Desktop/zhenti/");
 		//File files = new File("C:\\Users\\jiwei\\Desktop\\ytk\\");
 		if(files.isDirectory()){
 			File[] dir = files.listFiles();
-			for(File d :dir){
-				if(d.getName().indexOf("DS_Store")>0){
+			for(File dd :dir){
+				if(dd.getName().indexOf("DS_Store")>0 || dd.getName().equals("pic") ==true){
 					continue;
 				}
-				String fileName = d.getName();
-				String[] fn = fileName.split("-");
-				year = fn[0];
-				source = fn[1];
-				area =fn[2];
+				for(File d:dd.listFiles()){
+					if(d.getName().indexOf("DS_Store")>0){
+						continue;
+					}
+					qlist = new ArrayList<Question>();
+					String fileName = d.getName();
+					String[] fn = fileName.split("-");
+					year = fn[0];
+					source = fn[1];
+					area =fn[2];
 					
-				File f = new File(d.getPath()+File.separator+"yanyu.txt");
-				bigTag ="言语理解与表达";
-				if(f.exists()){
-					processTxt(f);
+					File f = new File(d.getPath()+File.separator+"zhijue.txt");
+					bigTag ="知觉速度与准确性";
+					if(f.exists()){
+						processTxt(f);
+					}
+					
+					f = new File(d.getPath()+File.separator+"yanyu.txt");
+					bigTag ="言语理解与表达";
+					if(f.exists()){
+						processTxt(f);
+					}
+					f = new File(d.getPath()+File.separator+"shuliang.txt");
+					bigTag ="数量关系";
+					if(f.exists()){
+						processTxt(f);
+					}
+					f = new File(d.getPath()+File.separator+"panduan.txt");
+					bigTag ="判断推理";
+					if(f.exists()){
+						processTxt(f);
+					}
+					f = new File(d.getPath()+File.separator+"changshi.txt");
+					bigTag ="常识判断";
+					if(f.exists()){
+						processTxt(f);
+					}
+					f = new File(d.getPath()+File.separator+"ziliao.txt");
+					bigTag ="资料分析";
+					if(f.exists()){
+						processTxt(f);
+					}
+					
+					
+					// 导出到excel
+					//files
+					exportExcel("/Users/wji/Desktop/zhenti/"+fileName+".xls",qlist);		
+					//exportExcel("C:\\Users\\jiwei\\Desktop\\ytk\\"+fileName+".xls",qlist);		
 				}
-				f = new File(d.getPath()+File.separator+"shuliang.txt");
-				bigTag ="数量关系";
-				if(f.exists()){
-					processTxt(f);
-				}
-				f = new File(d.getPath()+File.separator+"panduan.txt");
-				bigTag ="判断推理";
-				if(f.exists()){
-					processTxt(f);
-				}
-				f = new File(d.getPath()+File.separator+"changshi.txt");
-				bigTag ="常识判断";
-				if(f.exists()){
-					processTxt(f);
-				}
-				f = new File(d.getPath()+File.separator+"ziliao.txt");
-				bigTag ="资料分析";
-				if(f.exists()){
-					processTxt(f);
-				}
-				// 导出到excel
-				//files
-				exportExcel("/Users/wji/Desktop/ytk/"+fileName+".xls",qlist);		
-				//exportExcel("C:\\Users\\jiwei\\Desktop\\ytk\\"+fileName+".xls",qlist);		
 			}
 		}
 	}
@@ -154,9 +168,13 @@ public class YtkAnalysis {
 				}
 
 				// anower
-				Element answer = el.getElementsByClass("correct-answer").get(0);
-				System.out.println("answer=" + answer.text());
-				item.ans = answer.text();
+				Elements answer = el.getElementsByClass("correct-answer");
+				item.ans="";
+				for(Element an:answer ){
+					System.out.println("answer=" + an.text());
+					item.ans=  item.ans+","+an.text();
+				}			
+				item.ans = item.ans.substring(1);
 				// solution overflow
 
 				Elements ktag = el.getElementsByClass("solution-item").get(0)

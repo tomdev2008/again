@@ -43,6 +43,15 @@ public class Subject extends BaseModel{
 	 * */
     public SubjectSource source;
     
+	/**
+	 * 题目年份
+	 * */
+    public int year;
+    
+	/**
+	 * 所属城市
+	 * */
+    public Set<City> cities = new HashSet<City>();
     
 	/**
 	 * 题目从属大知识点
@@ -80,7 +89,7 @@ public class Subject extends BaseModel{
 	 * 大题的子题目
 	 * */
 
-    public List<Subject> subs= new ArrayList<Subject>() ;
+    public List<Subject> subs= new ArrayList<Subject>();
 
 	/**
 	 * 题目解答

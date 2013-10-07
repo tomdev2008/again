@@ -2,6 +2,7 @@ package tools;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -28,7 +29,9 @@ import com.qiniu.api.config.Config;
 import com.qiniu.api.io.IoApi;
 import com.qiniu.api.io.PutExtra;
 import com.qiniu.api.io.PutRet;
+import com.qiniu.api.rs.Entry;
 import com.qiniu.api.rs.PutPolicy;
+import com.qiniu.api.rs.RSClient;
 
 public class UploadUtils {
 
@@ -37,7 +40,7 @@ public class UploadUtils {
 //	     Config.SECRET_KEY = Play.configuration.getProperty("qiniu.ck");
 //	}
 	
-	public static String upload(File file) throws AuthException, JSONException{
+	public static String upload(File file) throws AuthException, JSONException, IOException{
 		 Config.ACCESS_KEY = "Qd_tBfMSXMJmaveNsFLKptr7J1eOCCIWYvpqyN_W";
 	     Config.SECRET_KEY = "CQSjBUIyeSfnfjoglPEjruV5Zx2CrXemDAvqVnPU";
 		Mac mac = new Mac(Config.ACCESS_KEY, Config.SECRET_KEY);
@@ -46,11 +49,17 @@ public class UploadUtils {
         PutPolicy putPolicy = new PutPolicy(bucketName);
         String uptoken = putPolicy.token(mac);
         PutExtra extra = new PutExtra();
-        String key = String.valueOf(System.currentTimeMillis());
-        PutRet ret = IoApi.putFile(uptoken, key, file, extra);
-		return ret.getKey();
+        String key = file.getName().substring(file.getName().indexOf("-")+1,file.getName().indexOf(".")).toLowerCase();
+        RSClient client = new RSClient(mac);
+        Entry statRet = client.stat("hizhiti", key);
+        if(statRet.statusCode !=200){
+        	PutRet ret = IoApi.putFile(uptoken, key, file, extra);
+        	key = ret.getKey();
+        }
+        
+		return key;
 	}
-	
+ 	
 	public static String copyUrl(String url) throws IOException, AuthException, JSONException{
 		File file = getImageFile(url);
 		return UploadUtils.upload(file);
@@ -66,13 +75,20 @@ public class UploadUtils {
         String url = obj.toString();
         System.out.println(url);
         String prefix=url.substring(url.lastIndexOf("."),url.lastIndexOf("?"));
-        File file = new File(FileUtils.getTempDirectory(), "uploads/images/" + Codec.hexMD5(url)+prefix);
-        if (file.exists()) {
-            Logger.info("write image %s to file from cache file", url);
-        } else {
+        String md5 = Codec.hexMD5(url);
+        File root = new File("/Users/wji/Desktop/zhenti/pic");
+        MyFilter filter = new MyFilter(md5);  
+        String[] names=root.list(filter);
+        File file =null;
+        if(names.length >0){
+        	file = new File(names[0]);
+        	Logger.info("write image %s to file from cache file", url);
+        }else{
+        	file = new File(root.getPath()+"/" +md5+"-"+System.currentTimeMillis()+prefix);
             Logger.info("write image to file from url:%s", url);
             FileUtils.copyInputStreamToFile(getStream(url), file);
         }
+        
         return file;
     }
     
@@ -99,5 +115,13 @@ public class UploadUtils {
 		UploadUtils.upload(file);
 	}
 	
-	
+	static class MyFilter implements FilenameFilter{  
+        private String type;  
+        public MyFilter(String type){  
+            this.type = type;  
+        }  
+        public boolean accept(File dir,String name){  
+            return name.startsWith(type);  
+        }  
+    }  
 }
