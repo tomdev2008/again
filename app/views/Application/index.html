@@ -1,116 +1,180 @@
 #{extends 'main.html' /} #{set title:'个人主页' /}
-<script src="@{'/public/javascripts/Chart.min.js'}"
+<script src="@{'/public/javascripts/highcharts.js'}"
 	type="text/javascript" charset="${_response_encoding}"></script>
+<div class="navbar" style="margin-top: 60px;">
+	<div class="navbar-inner">
+		<div class="container">
+			<div class="nav-collapse collapse">
+				<ul class="nav">
+					<li class="#{if request.path == '/'}active#{/if}"><a href="/">公务员考试</a></li>
+				</ul>
+				<ul class="nav">
+					<li><a href="javascript:void(0)"><img
+							src="@{'/public/images/add.png'}" style="margin-right: 5px;" />添加</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="container main">
-	<div class="tabbable">
-		<ul class="nav nav-tabs">
-			<li class="active"><a href="#tab1" data-toggle="tab">GCT英语</a></li>
-			<li><a href="#tab2" data-toggle="tab">GCT逻辑</a></li>
-			<li><a href="#tab3" data-toggle="tab">GCT数学</a></li>
-		</ul>
-		<div class="tab-content">
-			<div class="tab-pane active" id="tab1">
-				<div class="row-fluid">
-					<div class="span6 panel">
-						<div class="myScore row">
-							<div class="span6">
-								<p>预测分：</p>
-								<h1>60 <span class="score-text">分</span></h1>
-								<p>同类考生平均预测分：</p>
-								<h4>80 <span class="score-text">分</span></h4>
-								<p>已击败同类考生</p>
-								<h4>50 <span class="score-text">%</span></h4>
-							</div>
-							<div class="span6">
-								<p>答题总量：</p>
-								<h1>500 <span class="score-text">道</span></h1>
-								<p>同类考生平均答题量：</p>
-								<h4>172 <span class="score-text">道</span></h4>
-								<p>已击败同类考生</p>
-								<h4>20 <span class="score-text">%</span></h4>
-							</div>
-						</div>
-					</div>
-					<div class="span6 panel">
-						<canvas id="myChart" width=400 height=250></canvas>
+	<div class="row-fluid">
+		<div class="span8 panel">
+			<div class="panel-title">
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;预测分</p>
+			</div>
+			<div class="myScore row">
+				<div class="span4">
+					<div class="score-value">85</div>
+					<div class="score-img">
+						<img src="@{'/public/images/dian.png'}" /><img
+							src="@{'/public/images/dian.png'}" /><img
+							src="@{'/public/images/dian.png'}" /><img
+							src="@{'/public/images/dian.png'}" /><img
+							src="@{'/public/images/dian-gray.png'}" />
 					</div>
 				</div>
-				<div class="row-fluid">
-					<div class="myExercise span6 panel">
-						<p>已强化考点：</p>
-						<h4>10 <span class="score-text">个</span></h4>
-						<p>已提升考点：</p>
-						<h4>20 <span class="score-text">个</span></h4>
-						<p>练习次数：</p>
-						<h4>11 <span class="score-text">个</span></h4>
-						<p>已练习时间：</p>
-						<h4>5 <span class="score-text">小时</span>30 <span class="score-text">分钟</span></h4>
-					</div>
-					<div class="span6 panel">
-						<canvas id="myChart2" width=300 height=300></canvas>
-					</div>
-				</div>
-				<div class="row-fluid">#{include 'common/tree.html' /}</div>
-				<div class="row-fluid panel"
-					style="padding-top: 10px; padding-bottom: 10px;">
-					<div class="row-fluid">
-						<div class="span4" align=center>
-							<span class="button-wrap"><a href="/Exercises/start"
-								class="button button-circle button-primary">快速练习</a></span>
+				<div class="span8">
+					<div class="pro-text">同类考生平均预测分：45分</div>
+					<div class="pro-img">
+						<div class="progress">
+							<div class="bar" style="width: 60%;"></div>
 						</div>
-						<div class="span4" align=center>
-							<span class="button-wrap"><a href="javascript:void(0)"
-								class="button button-circle button-primary">专项练习</a></span>
-						</div>
-						<div class="span4" align=center>
-							<span class="button-wrap"><a href="javascript:void(0)"
-								class="button button-circle button-primary">真题模考</a></span>
+					</div>
+					<div class="pro-text">已击败同类考生：97.5%</div>
+					<div class="pro-img">
+						<div class="progress">
+							<div class="bar" style="width: 60%;"></div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="tab-pane" id="tab2"></div>
-			<div class="tab-pane" id="tab3"></div>
+		</div>
+		<div class="span4 panel">
+			<div class="panel-title">
+				<p>
+					<img src="@{'/public/images/line-chart.png'}" />预测分数曲线图
+				</p>
+			</div>
+			<div id="myChart" style="height: 170px;"></div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="myExercise span12 panel">
+			<div class="span8">
+				<div id="myChart2" style="height:330px;"></div>
+			</div>
+			<div class="span4">
+				<div>
+					<div class="kd-top">良好掌握考点9个</div>
+					<div>
+						<ul class="kd-list">
+							<li><span>1</span>判断推理 77%</li>
+							<li><span>2</span>资料分析 12%</li>
+							<li><span>3</span>判断推理 9%</li>
+							<li><span>4</span>判断推理 77%</li>
+							<li><span>5</span>资料分析 12%</li>
+							<li><span>6</span>判断推理 9%</li>
+							<li><span>7</span>判断推理 77%</li>
+							<li><span>8</span>资料分析 12%</li>
+							<li><span>9</span>判断推理 9%</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">#{include 'common/tree.html' /}</div>
+	<div class="row-fluid" style="padding-top: 10px; padding-bottom: 10px;">
+		<div class="row-fluid">
+			<div class="span4" align=center>
+				<span class="button-wrap"><a href="/Exercises/start"
+					class="button button-circle button-primary">快速练习</a></span>
+			</div>
+			<div class="span4" align=center>
+				<span class="button-wrap"><a href="javascript:void(0)"
+					class="button button-circle button-primary">专项练习</a></span>
+			</div>
+			<div class="span4" align=center>
+				<span class="button-wrap"><a href="javascript:void(0)"
+					class="button button-circle button-primary">真题模考</a></span>
+			</div>
 		</div>
 	</div>
 </div>
 <script>
 	$(function() {
-		var ctx = $("#myChart").get(0).getContext("2d");
-		var myNewChart = new Chart(ctx);
-		var data = {
-			labels : [ "January", "February", "March", "April", "May", "June",
-					"July" ],
-			datasets : [ {
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,1)",
-				pointColor : "rgba(151,187,205,1)",
-				pointStrokeColor : "#fff",
-				data : [ 28, 48, 40, 19, 96, 27, 100 ]
-			} ]
-		}
-		new Chart(ctx).Line(data, {});
-
-		var ctx = $("#myChart2").get(0).getContext("2d");
-		var myNewChart = new Chart(ctx);
-		var data = [ {
-			value : 30,
-			color : "#F7464A"
-		}, {
-			value : 50,
-			color : "#E2EAE9"
-		}, {
-			value : 100,
-			color : "#D4CCC5"
-		}, {
-			value : 40,
-			color : "#949FB1"
-		}, {
-			value : 120,
-			color : "#4D5360"
-		}
-
-		]
-		new Chart(ctx).Doughnut(data, {});
+		$('#myChart').highcharts(
+				{
+					title : {
+						text : null
+					},
+					xAxis : {
+						categories : [ 'Jan', 'Feb', 'Mar', 'Apr', 'May',
+								'Jun', 'Jul' ]
+					},
+					yAxis : {
+						title : {
+							text : null
+						},
+						plotLines : [ {
+							value : 0,
+							width : 1,
+							color : '#808080'
+						} ]
+					},
+					tooltip : {
+						valueSuffix : '°C'
+					},
+					legend : {
+						enabled : false
+					},
+					series : [ {
+						name : 'Tokyo',
+						data : [ 7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2 ]
+					} ]
+				});
+		
+		$('#myChart2').highcharts({
+	        chart: {
+	            plotBackgroundColor: null,
+	            plotBorderWidth: null,
+	            plotShadow: false
+	        },
+	        title: {
+	            text: null
+	        },
+	        tooltip: {
+	    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	        },
+	        plotOptions: {
+	            pie: {
+	                allowPointSelect: true,
+	                cursor: 'pointer',
+	                dataLabels: {
+	                    enabled: true,
+	                    color: '#000000',
+	                    connectorColor: '#000000',
+	                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+	                }
+	            }
+	        },
+	        series: [{
+	            type: 'pie',
+	            name: 'Browser share',
+	            data: [
+	                ['Firefox',   45.0],
+	                ['IE',       26.8],
+	                {
+	                    name: 'Chrome',
+	                    y: 12.8,
+	                    sliced: true,
+	                    selected: true
+	                },
+	                ['Safari',    8.5],
+	                ['Opera',     6.2],
+	                ['Others',   0.7]
+	            ]
+	        }]
+	    });
 	})
 </script>
