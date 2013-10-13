@@ -67,7 +67,7 @@ public class Application extends Controller {
 	
 	
 	public static void importYTK() throws IOException{
-		File dir =Play.getFile("ytk");
+		File dir =Play.getFile("/Users/wji/Desktop/ytk");
 		if(dir.exists() && dir.isDirectory()){
 			for(File f :dir.listFiles()){
 				try {
