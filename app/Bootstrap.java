@@ -28,7 +28,7 @@ public class Bootstrap extends Job {
 
     @Override
     public void doJob() {       
-//        initRoleUserMenu();
+        initRoleUserMenu();
     }
 
     /**
