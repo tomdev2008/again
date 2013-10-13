@@ -21,6 +21,7 @@ public class Course extends BaseModel{
 	public int index;
 	
 	public Course(String name,Course tagContext){
+		super();
 		this.name=name;
 		this.context=tagContext;
 		
