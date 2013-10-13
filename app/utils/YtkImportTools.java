@@ -31,6 +31,9 @@ public class YtkImportTools {
 		String fn = resource.getName();
 		System.out.println("==>"+fn);
 		String[] sbs = fn.split("-");
+		if(sbs.length<2){
+			return;
+		}
 		String year = sbs[0];
 		Course course = Course.find("name", "公务员行测").first();
 		if(course == null){

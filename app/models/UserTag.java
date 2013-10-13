@@ -20,9 +20,10 @@ public class UserTag extends BaseModel {
     public Course course;
     
 	/**
-	 * 知识点大分类
+	 * 父UserTag
 	 * */
-    public Tag bigTag;
+    @Reference
+    public  UserTag  context;
     
 	/**
 	 * 知识点

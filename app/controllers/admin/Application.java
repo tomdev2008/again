@@ -11,9 +11,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import job.UserSubjectInitJob;
 import jxl.read.biff.BiffException;
+import models.City;
+import models.Course;
 import models.Menu;
 import models.Subject;
+import models.SubjectSource;
 import models.Tag;
 import models.User;
 import models.UserExercise;
@@ -67,7 +71,7 @@ public class Application extends Controller {
 	
 	
 	public static void importYTK() throws IOException{
-		File dir =Play.getFile("/Users/wji/Desktop/ytk");
+		File dir =Play.getFile("ytk");
 		if(dir.exists() && dir.isDirectory()){
 			for(File f :dir.listFiles()){
 				try {
@@ -78,6 +82,17 @@ public class Application extends Controller {
 				}
 			}
 		}
+	}
+	
+	
+	public static void initTest(){
+		User user = User.find("userName", "admin").first();
+		Course course =Course.find("name", "公务员行测").first();
+		SubjectSource source = SubjectSource.find("name","上海市公务员录用考试《行测》真题").first();
+		City city = City.filter("name", "上海").first();
+		
+		
+		new UserSubjectInitJob(user, city, course, source).now();
 	}
 	
 	
