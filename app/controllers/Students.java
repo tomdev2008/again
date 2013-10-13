@@ -1,12 +1,11 @@
-//package controllers;
-//
-//import models.StudentProfile;
-//import models.User;
-//import play.mvc.Controller;
-//import play.mvc.With;
+package controllers;
+
+import models.User;
+import play.mvc.Controller;
+import play.mvc.With;
 //@With(Secure.class)
-//public class Students extends Controller {
-//	public static void index(final String userid) {
+public class Students extends Controller {
+	public static void index(final String userid) {
 //		//TODO：获取当前用户
 //		User user = User.filter("userName", "test1").first();
 //				
@@ -25,6 +24,6 @@
 //		//已击败同类考生比例
 //		
 //		//知识点明细
-//		render();
-//	}
-//}
+		render();
+	}
+}

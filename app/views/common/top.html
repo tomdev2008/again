@@ -1,5 +1,5 @@
 %{
-	models.User user =  controllers.Secure.getLoginUser();
+	//models.User user =  controllers.Secure.getLoginUser();
 }%
 <div class="navbar navbar-fixed-top navbar-inverse">
 	<div class="navbar-inner">
@@ -7,23 +7,22 @@
 			<a class="btn btn-navbar" data-toggle="collapse"
 				data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 				class="icon-bar"></span> <span class="icon-bar"></span>
-			</a> <a class="brand" href="/">智题</a>
+			</a> <a class="brand" href="/"><img src="@{'/public/images/logo.png'}" /></a>
 			<div class="nav-collapse collapse">
 				<ul class="nav">
-					<li class="#{if request.path == '/'}active#{/if}"><a href="/">个人主页</a></li>
+					<li class="#{if request.path == '/'}active#{/if} nav-line-right nav-line-left"><a href="/">能力评估报告</a></li>
 				</ul>
 				<ul class="nav">
-					<li class="#{if request.path == '/Exercises/start'}active#{/if}"><a href="/Exercises/start">去做题</a></li>
+					<li class="#{if request.path == '/Exercises/start'}active#{/if} nav-line-right"><a href="/Exercises/start">练习与模考</a></li>
 				</ul>
 				<ul class="nav">
-					<li><a href="javascript:void(0)">历史题库</a></li>
+					<li><a href="javascript:void(0)">我的练习</a></li>
 				</ul>
-				<ul class="nav">
-					<li><a href="javascript:void(0)">错题集</a></li>
-				</ul>
-				<ul class="nav pull-right">
+				<ul class="nav pull-right" style="font-size:13px;">
+					<li><a href="javascript:void(0)"><img src="@{'/public/images/mobile.png'}" style="margin-right:5px;" />手机客户端</a></li>
+					<li><img src="@{'/public/images/line.jpg'}" style="margin-top:20px;"/></li>
 					<li id="fat-menu" class="dropdown"><a href="#" id="drop3"
-						role="button" class="dropdown-toggle" data-toggle="dropdown">${user.userName}，您好<b
+						role="button" class="dropdown-toggle" data-toggle="dropdown"><img src="@{'/public/images/user.png'}" style="margin-right:5px;" />xxx，您好<b
 							class="caret"></b>
 					</a>
 						<ul class="dropdown-menu" role="menu" aria-labelledby="drop3">

@@ -26,7 +26,7 @@ import play.mvc.With;
 import service.TagService;
 
 import com.google.code.morphia.Key;
-@With(Secure.class)
+//@With(Secure.class)
 public class Exercises extends Controller {
 
 	public static void index(){
