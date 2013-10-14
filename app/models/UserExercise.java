@@ -6,16 +6,19 @@ import java.util.List;
 
 import models.enums.ExerciseType;
 
+import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
 
 import play.modules.morphia.Model;
 import tools.SequenceUtils;
 
+@Entity
 public class UserExercise extends BaseModel {
 
 	@Reference
 	public User user;
 	
+	@Reference
 	public Course course;
 	/**
 	 * 0 未完成
@@ -62,6 +65,7 @@ public class UserExercise extends BaseModel {
 	/**
 	 * 新涉及知识点
 	 */
+	@Reference
 	public List<Tag> newTag = new ArrayList<Tag>();
 	
 	/**

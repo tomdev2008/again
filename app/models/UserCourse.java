@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.Set;
 
 import play.modules.morphia.Model;
 import tools.SequenceUtils;
@@ -18,6 +19,8 @@ public class UserCourse extends BaseModel{
 	@Reference
 	public Course course;
 	
+	@Reference
+	public Set<City> cities;
 	/**
 	 * 预测分
 	 */

@@ -23,5 +23,7 @@ GET	   /admin								   controllers.admin.Application.index
 GET	   /admin/user/add						   controllers.admin.Users.add
 
 
+GET    /{courseName}						   controllers.Application.index
+
 
 *       /{controller}/{action}                  {controller}.{action}

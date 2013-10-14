@@ -15,6 +15,7 @@ public class Tag extends BaseModel{
 	@Reference
 	public Tag context;
 	
+	@Reference
 	public Course course;
 	
 	public String name;

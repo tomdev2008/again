@@ -17,16 +17,19 @@ public class UserTag extends BaseModel {
 	/**
 	 * tag所属课程
 	 * */
+	@Reference
     public Course course;
     
 	/**
-	 * 知识点大分类
+	 * 父UserTag
 	 * */
-    public Tag bigTag;
+    @Reference
+    public  UserTag  context;
     
 	/**
 	 * 知识点
 	 * */
+    @Reference
     public Tag tag;
     
     public int score;
