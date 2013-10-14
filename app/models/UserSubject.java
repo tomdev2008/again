@@ -13,6 +13,7 @@ public class UserSubject extends BaseModel {
 	@Reference
 	public User user;
 
+	@Reference
 	public Course course;
 	
 	@Reference

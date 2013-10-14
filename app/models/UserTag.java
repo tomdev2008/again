@@ -17,6 +17,7 @@ public class UserTag extends BaseModel {
 	/**
 	 * tag所属课程
 	 * */
+	@Reference
     public Course course;
     
 	/**
@@ -28,6 +29,7 @@ public class UserTag extends BaseModel {
 	/**
 	 * 知识点
 	 * */
+    @Reference
     public Tag tag;
     
     public int score;

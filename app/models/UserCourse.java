@@ -16,8 +16,10 @@ public class UserCourse extends BaseModel{
 	@Reference
 	public User user;
 	
+	@Reference
 	public Course course;
 	
+	@Reference
 	public Set<City> cities;
 	/**
 	 * 预测分

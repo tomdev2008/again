@@ -26,6 +26,7 @@ import controllers.Public;
 import controllers.wither.LogPrinter;
 import play.Play;
 import play.libs.Codec;
+import play.modules.morphia.Model;
 import play.mvc.Controller;
 import play.mvc.With;
 import service.TagService;
@@ -95,6 +96,16 @@ public class Application extends Controller {
 		new UserSubjectInitJob(user, city, course, source).now();
 	}
 	
+	public static void getData(){
+		
+		Tag tag = Tag.find("name", "判断推理").first();
+		Set<Tag> tags  = new HashSet<Tag>();
+		tags.add(tag);
+		List<Subject> list = Subject.find("tags.id", tag.id).asList();
+		for(Subject sb:list){
+			System.out.println(sb.id);
+		}
+	}
 	
 	
 }

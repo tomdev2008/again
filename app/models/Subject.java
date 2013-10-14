@@ -36,11 +36,13 @@ public class Subject extends BaseModel{
 	/**
 	 * 题目所属课程
 	 * */
+    @Reference
     public Course course;
     
 	/**
 	 * 题目来源
 	 * */
+    @Reference
     public SubjectSource source;
     
 	/**
@@ -51,16 +53,19 @@ public class Subject extends BaseModel{
 	/**
 	 * 所属城市
 	 * */
+    @Reference
     public Set<City> cities = new HashSet<City>();
     
 	/**
 	 * 题目从属大知识点
 	 * */
+    @Reference
     public Tag bigTag = new Tag();
     
 	/**
 	 * 题目知识点
 	 * */
+    @Reference
     public Set<Tag> tags = new HashSet();
 
     /**
