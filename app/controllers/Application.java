@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import models.UserCourse;
 import models.UserTag;
 import play.mvc.Controller;
 import play.mvc.With;
+import service.UserTagService;
 @With(Secure.class)
 public class Application extends Controller {
 
@@ -25,14 +27,9 @@ public class Application extends Controller {
     	Course course = Course.filter("name", courseName).first();
   
     	UserCourse uc = UserCourse.find("user", user).filter("course.id", course.id).first();
-    	List<Tag> bigTags = Tag.filter("course.id", course.id).filter("contextTag is", null).order("index").asList();
-    	for(Tag t:bigTags){
-    		long cnt = UserTag.filter("user", user).filter("course.id", course.id).filter("bigTag", t).count();
-    		
-    		Map node = new HashMap();
-    		node.put("name", t.name);
-    		node.put("", "");
-    	}
+    	List<UserTag> roots = UserTag.find("user", user).filter("context exists", false).filter("course.id", course.id).order("tag.index").asList();
+    	List<Map> result = new ArrayList();
+    	UserTagService.createTree(roots, result);
     	
     	List<Tag> tags = UserTag.filter("user", user).filter("course.id", course.id).asList();
         render(uc,tags);
