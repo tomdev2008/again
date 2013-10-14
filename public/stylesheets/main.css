@@ -45,10 +45,18 @@ body {
 		url("http://dw-resources.qiniudn.com/images/patterns/white_wall_hash.jpg");
 	color: #333;
 }
-
+.progress .bar {
+	background-image: linear-gradient(to bottom, RGB(0,128,237), RGB(0,128,237));
+}
+.tree .progress .bar img {
+	top: 11px;
+	position: absolute;
+}
+.tree .up-img {
+}
 .tree {
 	min-height: 20px;
-	padding: 19px;
+	padding: 26px;
 	margin-bottom: 20px;
 	background-color: white;
 	-webkit-border-radius: 6px;
@@ -66,12 +74,13 @@ body {
 	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3), 1px 1px 1px 1px
 		rgba(0, 0, 0, 0.25);
 }
-
+.tree-ul {
+	margin:0;
+}
 .tree li {
 	list-style-type: none;
 	margin: 0;
-	padding: 10px 5px 0 5px;
-	position: relative
+	position: relative;
 }
 
 .tree li::before,.tree li::after {
@@ -82,7 +91,6 @@ body {
 }
 
 .tree li::before {
-	border-left: 1px solid #999;
 	bottom: 50px;
 	height: 100%;
 	top: 0;
@@ -90,22 +98,19 @@ body {
 }
 
 .tree li::after {
-	border-top: 1px solid #999;
 	height: 20px;
 	top: 25px;
 	width: 25px
 }
-
-.tree li span {
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border: 1px solid #999;
-	border-radius: 5px;
-	display: inline-block;
-	padding: 3px 8px;
-	text-decoration: none
+.tree-frist-li{
+	border-top: 1px solid #999;
 }
-
+.tree li span {
+	border-bottom: 1px solid #999;
+	display: inline-block;
+	text-decoration: none;
+	line-height: 36px;
+}
 .tree li.parent_li>span {
 	cursor: pointer
 }
@@ -119,13 +124,63 @@ body {
 }
 
 .tree li.parent_li>span:hover,.tree li.parent_li>span:hover+ul li span {
-	background: #eee;
-	border: 1px solid #94a0b4;
 	color: #000
 }
-canvas {
-	display:block;
-	margin:0 auto;
+
+.tree [class^="icon-"], [class*=" icon-"] {
+	background-image: url("../images/icon-down.png");
+	background-position: 0 ;
+}
+
+.tree .icon-folder-open{
+	background-position: 0;
+}
+.tree .progress{
+	 margin-bottom: 0;
+	 height:5px;
+}
+.tree .icon-plus-sign {
+    background-position: 0;
+}
+.tree .icon-folder-open {
+    background-position: 0;
+}
+.tree .icon-plus-sign {
+    background-position: 0 ;
+}
+.tree-block-1 {
+	width:140px;
+	background-color:RGB(245,246,248);
+}
+.tree-leaf {
+	padding-left:13px;
+}
+.parent_li .parent_li .tree-block-1 {
+	width:115px;
+}
+.parent_li li .tree-block-1 {
+	width:115px;
+}
+.parent_li .parent_li .parent_li .tree-block-1 {
+	width:90px;
+}
+.parent_li .parent_li li .tree-block-1 {
+	width:90px;
+}
+.tree-frist-li .tree-block-1 {
+	text-align:center;
+}
+.tree-block-2 {
+	width:160px;
+	text-align:center;
+	margin-left:-4px;
+}
+.tree-progess {
+	width:279px;
+}
+.progress-wapper {
+	 margin-bottom: 13px;
+    margin-top: -18px;
 }
 .navbar-inner .container{
 	width:940px;
