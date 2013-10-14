@@ -74,26 +74,28 @@ public class UserSubjectInitJob extends Job{
 					}else{
 						ut.subjectCnt = ut.subjectCnt +1;		
 					}
+					ut.save();
+					System.out.println("add ut over");
 					UserTag child = ut;
 					while(child.tag.context!=null){
 						UserTag parent = UserTag.find("user",user).filter("course.id", course.id).filter("tag.id", child.tag.context.id).first();
 						if(parent!=null){
-							child.context = parent;
 							parent.subjectCnt = parent.subjectCnt+1;
 						}else{
 							parent = new UserTag();
 							parent.user = user;
-							parent.tag = child.tag;
+							parent.tag = child.tag.context;
 							parent.subjectCnt =1;
 							parent.course = course;
 						}
 						parent.save();
+						child.context = parent;
+						child.save();
 						child = parent;
 						System.out.println("add parent ut over");
 					}
 					
-					ut.save();
-					System.out.println("add ut over");
+					
 				}
 			}
 		}
