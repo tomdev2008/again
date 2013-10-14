@@ -50,6 +50,7 @@ public class UserSubjectInitJob extends Job{
 				}
 			}
 			
+			
 			SubjectType[] type = {SubjectType.SUBS,SubjectType.SUBM};
 			List<Subject> sbs = Subject.find("course.id", course.id).filter("source.id", source.id).filter("type nin", type).filter("status", SubjectStatus.VALID).asList();
 			for(Subject sb:sbs){
@@ -60,9 +61,10 @@ public class UserSubjectInitJob extends Job{
 				usb.URT = sb.frequency;
 				usb.weight = sb.weight;
 				usb.save();
+				System.out.println("add usb over");
 				for(Tag tag :sb.tags){
 					UserTag ut = UserTag.find("user", user).filter("course.id", course.id).filter("tag.id", sb.id).first();
-					UserTag child = ut;
+					
 					if(ut == null){
 						ut = new UserTag();
 						ut.user = user;
@@ -72,24 +74,26 @@ public class UserSubjectInitJob extends Job{
 					}else{
 						ut.subjectCnt = ut.subjectCnt +1;		
 					}
-					while(tag.context!=null){
+					UserTag child = ut;
+					while(child.tag.context!=null){
 						UserTag parent = UserTag.find("user",user).filter("course.id", course.id).filter("tag.id", child.tag.context.id).first();
 						if(parent!=null){
 							child.context = parent;
 							parent.subjectCnt = parent.subjectCnt+1;
 						}else{
+							parent = new UserTag();
 							parent.user = user;
-							parent.tag = tag;
+							parent.tag = child.tag;
 							parent.subjectCnt =1;
 							parent.course = course;
 						}
 						parent.save();
 						child = parent;
+						System.out.println("add parent ut over");
 					}
 					
 					ut.save();
-					
-					
+					System.out.println("add ut over");
 				}
 			}
 		}
